@@ -1,0 +1,101 @@
+
+        #Christmas {
+  margin-left: 10px;
+}
+
+#snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Ignore mouse events to allow clicking the Christmas tree */
+  z-index: 1000; /* Place the snowflakes on top of other elements */
+}
+
+.snowflake {
+  position: absolute;
+  top: -50px;
+  width: 10px; /* Default size */
+  height: 10px; /* Default size */
+  background: white;
+  border-radius: 50%;
+  animation: snowfall 10s linear infinite;
+  opacity: 0;
+  z-index: 1001;
+}
+
+@keyframes snowfall {
+  0% {
+    top: -50px;
+    left: calc(random() * 100%);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5; /* Fade to half opacity */
+  }
+  100% {
+    top: 100%;
+    opacity: 0; /* Fade out completely */
+  }
+}
+
+.fade-out {
+  animation: fadeOut 1s forwards; /* Fade out effect */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+
+<div id="snow-container"></div>
+            <a href="#" class="logo" id="Christmas">🎄</a>
+
+
+
+let snowflakesVisible = false; // Track the visibility of snowflakes
+  let snowContainer = document.getElementById('snow-container'); // Get the snow container
+
+  function createSnowflakes() {
+    for (let i = 0; i < 200; i++) {
+      setTimeout(() => {
+        let snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        // Set a random left position and size for each snowflake
+        snowflake.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+        let size = Math.random() * 10 + 5; // Random size between 5px and 15px
+        snowflake.style.width = size + 'px';
+        snowflake.style.height = size + 'px';
+        snowContainer.appendChild(snowflake);
+
+        // Remove snowflake after animation
+        snowflake.addEventListener('animationend', () => {
+          snowflake.remove();
+        });
+      }, i * 200); // Stagger appearance by 200ms
+    }
+  }
+
+  document.getElementById('Christmas').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    if (!snowflakesVisible) {
+      // Start snowfall
+      createSnowflakes();
+      snowflakesVisible = true; // Set the state to "on"
+    } else {
+      // Remove all existing snowflakes
+      let snowflakes = document.querySelectorAll('.snowflake');
+      snowflakes.forEach(snowflake => {
+        snowflake.remove(); // Remove existing snowflakes
+      });
+      snowflakesVisible = false; // Set the state to "off"
+    }
+  });

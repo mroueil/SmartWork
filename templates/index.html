@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet CNFPT</title>
+    <link rel="icon" type="image/png" href="Icon.png">
+
+    <!-- boxicons link -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- remixicons link -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!DOCTYPE html>
+    <html language="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mode Noël</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div id="tree-icon" onclick="toggleChristmasMode()">🎄</div>
+        <div id="snow-container"></div>
+        <script src="script.js"></script>
+    </body>
+    </html>
+
+
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins',sans-serif;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        /******************** Animation spider *******************/
+
+        body {
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        canvas {
+            height: 100vh;
+            width: 100%;
+        }     
+
+        /********************************************************/
+
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: linear-gradient(245.59deg, #189CD8 0%, #036c9c 28.53%, #013750 75.52%);
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative; /* Nécessaire pour le positionnement de l'image en pseudo-élément */
+            transition: background 0.5s ease;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('Fond.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: var(--body-after-opacity, 0); /* Caché par défaut */
+            transition: opacity 0.5s ease;
+            z-index: 1; /* Assure que l'image est au-dessus du dégradé mais derrière le contenu */
+        }
+
+        .background-container {
+            min-height: 100vh;
+            height: 100%;
+        }
+        
+
+        header{
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 33px 9%;
+            background: transparent;
+        }
+
+        .logo{
+            font-size: 30px;
+            font-weight: 700;
+            color: white;
+            position: relative; /* Nécessaire pour positionner le menu déroulant */
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none; /* Caché par défaut */
+            position: absolute;
+            top: 100%; /* Positionne juste en dessous du logo */
+            left: 0;
+            background-color: rgba(3, 108, 156, 0.8); /* Couleur #036c9c avec 50% de transparence */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 200px; /* Ajustez la largeur si nécessaire */
+            z-index: 1000; /* Assure que le menu est au-dessus des autres éléments */
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown-menu ul li {
+            padding: 10px;
+        }
+
+        .dropdown-menu ul li a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-menu ul li a:hover {
+            background-color: #013750; /* Couleur d'arrière-plan lors du survol */
+        }
+
+        .navlist{
+            display: flex;
+            padding-right: 150px;
+        }
+
+        .navlist a{
+            color: white;
+            margin-left: 60px;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all .55s ease;
+        }
+
+        .navlist a:hover{
+            border-bottom: 2px solid white;
+        }
+
+        /* Style pour masquer le sous-menu par défaut */
+        .navlist .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(3, 108, 156, 0.5); /* Couleur #036c9c avec 50% de transparence */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .navlist .dropdown-content li {
+            list-style-type: none;
+            padding: 8px 16px;
+        }
+
+        .navlist .dropdown-content li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Afficher le sous-menu lorsqu'il est actif */
+        .navlist .dropdown-content.show {
+            display: block;
+        }
+
+        /**********************************************/
+
+        #menu-icon{
+            color: white;
+            font-size: 35px;
+            z-index: 10001;
+            cursor: pointer;
+            display: none;
+        }
+
+        ::selection {
+			background-color: #f7f7f7; /* Changer la couleur de surlignage */
+			color: #2a2a2d; /* Changer la couleur du texte surligné */
+		}
+
+        .hero{
+            height: 100%;
+            width: 100%;
+            min-height: 100vh;
+            /*background: linear-gradient(245.59deg, #189CD8 0%, #036c9c 28.53%, #013750 75.52%);*/
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            align-items: center;
+            gap: 2rem;
+            z-index: 2; /* Assure que le text est au-dessus de l'image de fond mais derrière le contenu */
+        }
+
+        section{
+            padding: 0 19%;
+        }
+
+        .hero-text h5{
+            font-size: 14px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero-text h1{
+            font-family: 'Permanent Marker', cursive;
+            font-size: 90px;
+            line-height: 1;
+            color: white;
+            margin: 0 0 45px;
+        }
+
+        .hero-text h4{
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .hero-text p{
+            font-size: 15px;
+            line-height: 1.9;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero-img img{
+            width: 700px;
+            height: auto;
+        }
+
+        .hero-text a{
+            display: inline-block;
+            color: white;
+            background: #036c9c;
+            border: 1px solid transparent;
+            padding: 12px 30px;
+            line-height: 1.4;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 30px;
+            text-transform: uppercase;
+            transition: all .55s ease;
+        }
+
+        .hero-text a:hover{
+            background: transparent;
+            border: 1px solid white;
+            transform: translateX(8px);
+        }
+
+        .hero-text a.ctaa{
+            background: transparent;
+            border: 1px solid white;
+            margin-left: 20px;
+        }
+
+        .hero-text a.ctaa i{
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .scroll-down{
+            position: absolute;
+            bottom: 6%;
+            right: 9%;
+            z-index: 2; /* Assure que le contenu est au-dessus de l'image de fond */
+        }
+
+        .scroll-down i{
+            display: block;
+            padding: 12px;
+            font-size: 25px;
+            color: white;
+            background: transparent;
+            border-radius: 30px;
+            transition: all .50s ease;
+        }
+
+        .scroll-down i:hover{
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 1535px){
+            header{
+                padding: 15px 3%;
+                transition: .2s;
+
+            }
+            .scroll-down{
+                right: 3%;
+                transition: .2s;
+            }
+            
+        }
+
+        @media (max-width: 1460px){
+            section{
+                padding: 0 12%;
+                transition: .2s;
+            }
+        }
+
+        @media (max-width: 1340px){
+            .hero-img img{
+                width: 100%;
+                height: auto;
+            }
+            .hero-text h1{
+                font-size: 75px;
+                margin: 0 0 30px;
+            }
+            .hero-text h5{
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 1195px){
+            section{
+                padding: 0 3%;
+                transition: .2s;
+            }
+            .hero-text{
+                padding-top: 115px;
+            }
+            .hero-img{
+                text-align: center;
+            }
+            .hero-img img{
+                width: 560px;
+                height: auto;
+            }
+            .hero{
+                height: 100%;
+                gap: 1rem;
+                grid-template-columns: 1fr;
+            }
+            .scroll-down{
+                display: none;
+            }
+        }
+
+        @media (max-width: 990px){
+            #menu-icon{
+                display: block;
+            }
+            .navlist{
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                width: 300px;
+                height: 40vh;
+                background: rgba(3, 108, 156, 0.5); /* Couleur #036c9c avec 50% de transparence */
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding: 50px 20px;
+                transition: all .55s ease;
+            }
+            .navlist a{
+                display: block;
+                margin-left: 0;
+                margin: 7px 0;
+            }
+            .navlist.open{
+                right: 0;
+            }
+        }
+
+        @media (max-width: 680px){
+            .hero-img img{
+                width: 100%;
+                height: auto;
+            }
+        }
+        
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #013750;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .modal-content h1 {
+            font-family: 'Permanent Marker', cursive;
+            
+            font-size: 24px;
+            color: #ffffff; /* Couleur du texte, vous pouvez changer selon votre préférence */
+            margin-bottom: 20px; /* Espace entre le titre et la vidéo */
+        }
+
+        .close {
+            color: #ffffff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+
+        #app canvas {
+            display: block;
+            position: fixed;
+            z-index: -1;
+            top: 0;
+        }
+
+        .scroll-text {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(3, 108, 156, 0.8); /* Couleur #036c9c avec 50% de transparence */
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+            z-index: 2; /* Assure que le contenu est au-dessus de l'image de fond */
+        }
+
+        .scroll-text.show {
+            display: block;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 700px; /* Ajustez la largeur selon vos besoins */
+            height: auto;
+        }
+
+        .content{
+            width:100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        
+        .base-image, .overlay-image, .neon-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            transition: opacity 0.6s;
+            transform: translateY(-250px); /* Ajustez la valeur pour remonter l'image */
+            
+            
+        }
+
+        .overlay-image{
+            opacity: 0; /* Cache l'image opaque par défaut */
+            visibility: hidden; /* Assure que l'image opaque est cachée au départ */
+        }
+
+        .neon-image {
+            opacity: 0; /* Cache l'image opaque par défaut */
+            visibility: hidden; /* Assure que l'image opaque est cachée au départ */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* Pour des transitions en douceur */
+        }
+
+        .wrapper:hover .overlay-image {
+            opacity: 1; /* Affiche l'image opaque au survol */
+            visibility: visible; /* Assure que l'image opaque est visible au survol */
+        }
+
+        /* Afficher l'image quand le bouton est survolé */
+        .bouton:hover  .overlay-image {
+            opacity: 1; /* Affiche l'image */
+            visibility: visible; /* Rendre l'image visible */
+        }
+
+        .wrapper:hover .content {
+            opacity: 1;
+        }
+
+        .content h1{
+            font-size: 45;
+            color: #ffe100;
+            margin-bottom: 15px;
+        }
+
+        .content p{
+            font-size: 19px;
+            color: #fff;
+        }
+
+        .bouton {
+            background: none; /* Pas de fond pour que ça ressemble à du texte */
+            border: none; /* Pas de bordure */
+            color: white; /* Couleur du texte du bouton */
+            cursor: pointer; /* Changement de curseur au survol */
+            vertical-align: baseline; /* Aligne avec la ligne de base du texte */
+            padding: 0; /* Pas de remplissage pour éviter les décalages */
+            margin-left: 0; /* Pas de marge à gauche */
+            margin-right: 5px; /* Ajoute un espace à droite du bouton */
+            font: inherit; /* Utilise la même police que le texte environnant */
+            text-decoration: none; /* Pas de soulignement */
+        }
+
+        .logout-btn {
+    display: inline-block;
+    color: white;
+    background: #036c9c;
+    border: 1px solid transparent;
+    padding: 8px 20px;
+    line-height: 1.4;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 30px;
+    text-transform: uppercase;
+    transition: all .55s ease;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.logout-btn:hover {
+    background: transparent;
+    border: 1px solid white;
+    transform: translateX(8px);
+}
+
+.admin-btn {
+    display: inline-block;
+    color: white;
+    background: #036c9c;
+    border: 1px solid transparent;
+    padding: 8px 20px;
+    line-height: 1.4;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 30px;
+    text-transform: uppercase;
+    transition: all .55s ease;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.admin-btn:hover {
+    background: transparent;
+    border: 1px solid white;
+    transform: translateX(8px);
+}
+
+@media (max-width: 990px) {
+    .logout-btn {
+        margin-right: 60px; /* Ajustement pour le responsive */
+    }
+}
+
+@media (max-width: 990px) {
+    .admin-btn {
+        margin-right: 60px; /* Ajustement pour le responsive */
+    }
+}
+
+/* Style pour le menu déroulant */
+#timeout-select {
+    padding: 5px;
+    width: 200px; /* Ajustez la largeur selon vos besoins */
+}
+
+/* Style pour la popup de déconnexion */
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #013750;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.modal-content h2 {
+    color: white;
+}
+
+.modal-content p {
+    color: white;
+}
+
+/* Style pour les boutons de la popup */
+.modal-content button {
+    margin: 10px 0; /* Espacement vertical entre les boutons */
+    padding: 10px 20px; /* Ajustez le rembourrage pour agrandir les boutons */
+    border: none; /* Supprimer la bordure par défaut */
+    border-radius: 5px; /* Arrondir les coins des boutons */
+    background-color: #036c9c; /* Couleur de fond des boutons */
+    color: white; /* Couleur du texte des boutons */
+    cursor: pointer; /* Changer le curseur au survol */
+    transition: background-color 0.3s; /* Transition pour le changement de couleur */
+}
+
+.modal-content button:hover {
+    background-color: #024f7a; /* Couleur au survol des boutons */
+}
+
+.timeout-popup {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .timeout-popup-content {
+            background-color: #013750; /* Couleur de fond de la popup */
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 10px;
+            color: white; /* Couleur du texte en blanc */
+        }
+
+        .timeout-popup-content select {
+            padding: 5px;
+            width: 200px; /* Ajustez la largeur selon vos besoins */
+        }
+
+        .timeout-popup-content button {
+            margin-top: 10px; /* Espacement vertical entre les boutons */
+            padding: 10px 20px; /* Ajustez le rembourrage pour agrandir les boutons */
+            border: none; /* Supprimer la bordure par défaut */
+            border-radius: 5px; /* Arrondir les coins des boutons */
+            background-color: #036c9c; /* Couleur de fond des boutons */
+            color: white; /* Couleur du texte des boutons */
+            cursor: pointer; /* Changer le curseur au survol */
+            transition: background-color 0.3s; /* Transition pour le changement de couleur */
+        }
+
+        .timeout-popup-content button:hover {
+            background-color: #024f7a; /* Couleur au survol des boutons */
+        }
+        
+
+    </style>
+
+    <script type="module">
+
+        /****************** Neon Cursor *****************/
+
+        import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js';
+
+        document.addEventListener("DOMContentLoaded", function() {
+            neonCursor({
+                el: document.getElementById('app'),
+                shaderPoints: 16,
+                curvePoints: 80,
+                curveLerp: 0.5,
+                radius1: 5,
+                radius2: 30,
+                velocityTreshold: 10,
+                sleepRadiusX: 100,
+                sleepRadiusY: 100,
+                sleepTimeCoefX: 0.0025,
+                sleepTimeCoefY: 0.0025
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const neonImage = document.querySelector('.neon-image');
+            const scrollText = document.getElementById('scroll-text');
+            const sequence = ['ArrowDown', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
+            let inputSequence = [];
+
+            // Fonction pour vérifier la séquence de touches
+            function checkSequence() {
+                if (inputSequence.toString() === sequence.toString()) {
+                    // Basculer le background du body
+                    if (body.style.background === 'none') {
+                        body.style.background = 'linear-gradient(245.59deg, rgba(24, 156, 216, 0.6) 0%, rgba(3, 108, 156, 0.6) 28.53%, rgba(1, 55, 80, 0.6) 75.52%)';
+                    } else {
+                        body.style.background = 'none';
+                    }
+                    
+                    // Basculer opacity et visibility de .neon-image
+                    if (neonImage.style.opacity === '0') {
+                        neonImage.style.opacity = '1';
+                        neonImage.style.visibility = 'visible';
+                    } else {
+                        neonImage.style.opacity = '1';
+                        neonImage.style.visibility = 'visible';
+                    }
+
+                    scrollText.innerHTML = `<b>Félicitations, Programme !</b><br>Vous avez réussi à déjouer les systèmes et accéder au mode caché. Vous êtes désormais dans la zone réservée aux utilisateurs avancés. Préparez-vous à explorer les circuits inexplorés de la matrice.`;
+                    
+                    // Modifier l'opacité de body::after
+                    document.body.style.setProperty('--body-after-opacity', '0.3');
+
+                    // Réinitialiser la séquence après succès
+                    inputSequence = [];
+                }
+            }
+
+            document.addEventListener('keydown', function(event) {
+                // Ajouter la touche actuelle à la séquence
+                inputSequence.push(event.key);
+
+                // Vérifier la séquence
+                if (inputSequence.length > sequence.length) {
+                    inputSequence.shift(); // Maintenir la longueur de la séquence
+                }
+                
+                checkSequence();
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollDownButton = document.getElementById('scroll-down');
+            const scrollText = document.getElementById('scroll-text');
+
+            // Afficher le texte lorsque le bouton "scroll-down" est cliqué
+            scrollDownButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Empêche l'action par défaut du clic
+                scrollText.classList.toggle('show'); // Bascule la visibilité du texte
+            });
+
+            // Masquer le texte si l'utilisateur clique en dehors du message
+            document.addEventListener('click', function(event) {
+                // Vérifie si le clic est à l'intérieur du texte ou du bouton
+                if (!scrollText.contains(event.target) && !scrollDownButton.contains(event.target)) {
+                    scrollText.classList.remove('show'); // Masquer le texte
+                }
+            });
+        });
+
+    </script>
+
+    <!-- scrollreveal effect -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <script>
+        
+        
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html'; // Redirection vers login.html si non connecté
+            }
+        let menu = document.querySelector('#menu-icon');
+        let navlist = document.querySelector('.navlist');
+        let modal = document.getElementById('modal');
+        let btn = document.querySelector('.ctaa');
+        let span = document.querySelector('.close');
+        let video = document.querySelector('video');
+
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navlist.classList.toggle('open');
+        };
+
+        btn.onclick = function(event) {
+            event.preventDefault();
+            modal.style.display = 'block';
+            video.play(); // Démarre la vidéo automatiquement quand le modal s'ouvre
+        };
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+            video.pause(); // Met la vidéo en pause quand le modal se ferme
+        };
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                video.pause(); // Met la vidéo en pause quand le modal se ferme
+            }
+        };
+
+        /* Gérer le clic sur "Outils" et afficher/masquer le sous-menu. */
+        document.getElementById("tools-menu").addEventListener("click", function(event) {
+            event.preventDefault();
+            var submenu = document.getElementById("tools-submenu");
+            submenu.classList.toggle("show");
+        });
+
+        /* Fermer le sous-menu "outils" si on clique ailleurs sur la page */
+        window.onclick = function(event) {
+            if (!event.target.matches('#tools-menu')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        };
+
+        const sr = ScrollReveal({
+            distance: '65px',
+            duration: 2600,
+            delay: 450,
+            reset: true
+        });
+
+        sr.reveal('.hero-text', { delay: 200, origin: 'top' });
+        sr.reveal('.hero-img', { delay: 450, origin: 'top' });
+        sr.reveal('.scroll-down', { delay: 500, origin: 'right' });
+    });
+
+    function logout() {
+        // Effacer les données de session de l'utilisateur
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('currentUser ');
+        sessionStorage.removeItem('isAdmin');
+
+        // Rediriger vers la page de connexion
+        window.location.href = 'login.html';
+    }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let logo = document.querySelector('#logo');
+            let dropdownMenu = document.querySelector('#dropdown-menu');
+
+            logo.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Toggle the dropdown menu
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Optionnel : Fermer le menu si l'utilisateur clique en dehors
+            window.addEventListener('click', function(event) {
+                if (!logo.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        });
+
+        
+    </script>
+</head>
+<body>
+    
+    <div id="app">
+        
+        <header>
+            <a href="#" class="logo" id="logo">PROJET</a>
+    
+            <a href="Halloween.html" class="logo" id="Halloween">🕸</a>
+
+            <div class="dropdown-menu" id="dropdown-menu">
+                <ul>
+                    <li><a href="index.html">CNFPT</a></li>
+                    <li><a href="#">Projet 2</a></li>
+                    <li><a href="#">Projet 3</a></li>
+                    <li><a href="#">Projet 4</a></li>
+                    <!-- Ajoutez plus de projets ici -->
+                </ul>
+            </div>
+            <button id="username-btn" class="admin-btn"></button>
+        
+        
+            <ul class="navlist">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="Consignes.html">Procédures</a></li>
+                <li><a href="Template.html">Template</a></li>
+                <li><a href="Groupes.html">Groupes</a></li>
+                <li><a href="Generateur.html">Générateur</a></li>
+                <li class="dropdown">
+                    <a href="#" id="tools-menu">Outils</a>
+                    <ul class="dropdown-content" id="tools-submenu">
+                        <li><a href="https://envrec.sharepoint.com/sites/AltimanceaCDS-P06_CNFPT/Documents%20partages/Forms/AllItems.aspx?id=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2F03%5FCU%2FFormation%20CNFPT%2Fvang%40Inf%5FPrd%5FSL200149%5FRebond%5FRDP%5FC%5FSCC%5FCDS%5Fotp%2Erdp&viewid=7e309004%2D4cdd%2D434d%2D9cc0%2D518c4edf41ad&parent=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2F03%5FCU%2FFormation%20CNFPT" target="_blank">RDP Machine de rebond</a></li>
+                        <li><a href="https://moncompte.cnfpt.fr/" target="_blank">Mon Compte CNFPT</a></li>
+                        <li><a href="https://formadist.cnfpt.fr/gestion" target="_blank">FORMADIST</a></li>
+                        <li><a href="https://auth.cnfpt.fr/carbon/admin/index.jsp" target="_blank">WSO2</a></li>
+                        <li><a href="https://e-communautes.cnfpt.fr/admin/people" target="_blank">E-Communautés</a></li>
+                        <li><a href="https://www.cnfpt.fr/rechercher-formation" target="_blank">Rechercher une formation</a></li>
+                        <li><a href="https://cnfptprod.service-now.com/login.do" target="_blank">Service-Now</a></li>
+                        <li><a href="https://envrec.sharepoint.com/sites/AltimanceaCDS-P06_CNFPT/Documents%20partages/Forms/AllItems.aspx?csf=1&web=1&e=Q8ktv4&CID=06ac5205%2Dd04a%2D4f2b%2Dab33%2D7ec6ae50849f&FolderCTID=0x0120004482D408D6E9AA469EE16A5EE3DBFA3A&id=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2FCNFPT%2F03%5FCU%2FFiches%20signal%C3%A9tiques%20ServiceNow" target="_blank">Fiches signalétiques</a></li>
+                    </ul>
+                </li>
+            </ul>
+        
+            <button class="admin-btn" id="admin-btn" style="display: none;">Administration</button>
+            <button class="logout-btn" onclick="logout()">Déconnexion</button>
+            
+        
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </header>
+
+        
+        
+        <section class="hero" id="cnfpt">
+            <div class="hero-text">
+                <h5></h5>
+                <h4>Recyclea</h4>
+                <h1>TEAM CNFPT</h1>
+                <p>Bienvenue sur la page de l'équipe CNFPT ! <br><button class="bouton" onclick="window.open('Helios.html', '_blank')">Ici</button>, vous trouverez tous les outils indispensables pour vous faciliter la vie et optimiser votre travail.</p>
+                <a href="#" class="ctaa"><i class="ri-play-fill"></i>Voir présentation</a>
+            </div>
+
+            <div class="wrapper">
+                <div class="hero-img">
+                    <img src="{{ url_for('static', filename='images/main.png') }}" class="base-image">
+                    <img src="{{ url_for('static', filename='images/main_dark.png') }}" class="overlay-image">
+                    <img src="main_neon.png" class="neon-image">
+                    <div class="content">
+                        <br><br><br><br><br><br>
+                        <h1>Phrase d’accueil :</h1>
+                         <p><b>Centre de support informatique du CNFPT bonjour,</b></p>
+                        <P><b>que puis-je faire pour vous ?</b></P>
+                    </div>
+                </div>
+            </div>
+
+            
+            <script>
+
+
+                document.addEventListener('DOMContentLoaded', function() {
+        const usernameBtn = document.getElementById('username-btn');
+        const username = sessionStorage.getItem('currentUser '); // Récupère le nom d'utilisateur
+
+        if (username) {
+            usernameBtn.textContent = username; // Met à jour le texte du bouton avec le nom d'utilisateur
+        } else {
+            usernameBtn.textContent = "Nom d'utilisateur"; // Valeur par défaut si aucun nom d'utilisateur n'est trouvé
+        }
+    });
+                document.addEventListener('DOMContentLoaded', function() {
+                    const isAdmin = sessionStorage.getItem('isAdmin'); // Vérifie si l'utilisateur est admin
+                    const adminButton = document.getElementById('admin-btn');
+            
+                    // Si l'utilisateur est admin, affiche le bouton
+                    if (isAdmin === 'true') {
+                        adminButton.style.display = 'inline-block'; // Affiche le bouton si l'utilisateur est admin
+                        adminButton.onclick = function() {
+                            window.location.href = 'admin.html'; // Redirection vers la page d'administration
+                        };
+                    } else {
+                        adminButton.style.display = 'none'; // Assurez-vous que le bouton est masqué si l'utilisateur n'est pas admin
+                    }
+                });
+            </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const timeoutSelect = document.getElementById('timeout-select');
+    let timeoutDuration = 900 * 1000; // Valeur par défaut : 15 minutes en millisecondes
+    let timeoutId;
+    let logoutPopup = document.getElementById('logout-popup');
+
+    // Vérifier si une durée d'inactivité est déjà stockée dans localStorage
+    const storedTimeout = localStorage.getItem('timeoutDuration');
+    if (storedTimeout) {
+        timeoutDuration = parseInt(storedTimeout); // Utiliser la valeur stockée
+        timeoutSelect.value = timeoutDuration / 1000; // Mettre à jour la sélection
+    } else {
+        timeoutSelect.value = 900; // Mettre la valeur par défaut dans le select
+    }
+
+    function resetTimeout() {
+        // Ne pas réinitialiser le timer si la popup est affichée
+        if (logoutPopup.style.display === 'none') {
+            clearTimeout(timeoutId);
+            // Déconnexion après la durée choisie
+            timeoutId = setTimeout(showLogoutPopup, timeoutDuration); // Afficher la popup
+        }
+    }
+
+    function showLogoutPopup() {
+        logoutPopup.style.display = 'block'; // Afficher la popup
+    }
+
+    // Gérer le clic sur le bouton "Déconnexion"
+    document.getElementById('confirm-logout').addEventListener('click', function() {
+        logout(); // Déconnexion immédiate
+    });
+
+    // Réinitialiser le timer lors de l'interaction de l'utilisateur
+    document.addEventListener('mousemove', resetTimeout);
+    document.addEventListener('keypress', resetTimeout);
+    document.addEventListener('click', resetTimeout);
+
+    // Changer la durée du timeout lorsque l'utilisateur change la sélection
+    timeoutSelect.addEventListener('change', function() {
+        timeoutDuration = parseInt(this.value) * 1000; // Convertir en millisecondes
+        localStorage.setItem('timeoutDuration', timeoutDuration); // Sauvegarder dans localStorage
+        resetTimeout(); // Réinitialiser le timer avec la nouvelle durée
+    });
+
+    // Démarrer le timer initial
+    resetTimeout();
+});
+
+        
+</script>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameBtn = document.getElementById('username-btn');
+        const timeoutPopup = document.getElementById('timeout-popup');
+        const confirmTimeoutBtn = document.getElementById('confirm-timeout');
+
+        // Afficher la popup lorsque le bouton est cliqué
+        usernameBtn.addEventListener('click', function() {
+            timeoutPopup.style.display = 'block';
+        });
+
+        // Fermer la popup lorsque le bouton de confirmation est cliqué
+        confirmTimeoutBtn.addEventListener('click', function() {
+            const selectedTimeout = document.getElementById('timeout-select').value;
+            // Ici, vous pouvez gérer la logique de mise à jour du temps d'inactivité
+            console.log(`Temps d'inactivité sélectionné : ${selectedTimeout} secondes`);
+            timeoutPopup.style.display = 'none'; // Fermer la popup
+        });
+
+        // Fermer la popup si l'utilisateur clique en dehors
+        window.addEventListener('click', function(event) {
+            if (event.target === timeoutPopup) {
+                timeoutPopup.style.display = 'none';
+            }
+        });
+    });
+</script>
+            
+            <!-- Modal Structure -->
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h1>TEAM CNFPT</h1>
+                    <video width="560" height="315" src="Presentation.mp4" muted controls></video>
+                </div>
+            </div>
+            
+            </script>
+
+        </section> 
+
+        
+
+        <div class="scroll-down" id="scroll-down">
+            <a href="#"><i class="ri-arrow-down-s-fill"></i></a>
+        </div>
+
+        <!-- Texte caché par défaut -->
+        <div id="scroll-text" class="scroll-text">
+            <b>Mystère au CDS</b><br>Des incidents étranges commencent à perturber le flux de travail du CDS. Les employés de Recyclea rapportent des anomalies sur leurs ordinateurs : Des fichiers qui apparaissent et disparaissent, des applications qui se lancent de manière autonome, et des messages cryptiques qui s’affichent sur les écrans. Les employés ne peuvent plus travailler ni sortir du CDS, car les portes sont verrouillées.
+            Vous avez été choisi pour résoudre ce mystère et libérer les employés.<br>Un passage secret se cache sur cette page. À vous de trouver ce passage pour commencer à enquêter.
+        </div>
+       
+    </div>
+
+<!-- Popup pour choisir le temps d'inactivité -->
+<div id="timeout-popup" class="timeout-popup">
+    <div class="timeout-popup-content">
+        <h2>Choisissez le temps d'inactivité</h2>
+        <select id="timeout-select">
+            <option value="300">5 minutes</option>
+            <option value="600">10 minutes</option>
+            <option value="900" selected>15 minutes</option> <!-- Ajouté 'selected' ici -->
+            <option value="1800">30 minutes</option>
+            <option value="3600">1 heure</option>
+        </select>
+        <button id="confirm-timeout">Confirmer</button>
+    </div>
+</div>
+
+
+<!-- Popup de déconnexion -->
+<div id="logout-popup" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Déconnexion imminente</h2>
+        <p>Vous allez être déconnecté en raison d'une inactivité.</p>
+        <button id="confirm-logout">Déconnexion</button>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet CNFPT</title>
+    <link rel="icon" type="image/png" href="Icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: "game";
+            src: url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;800&display=swap");
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+                
+        html, body {
+            height: 100%;
+            font-family: "Poppins", sans-serif;
+            color: #6e7888;
+        }
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Empêche le défilement et donc le zoom */
+        }
+
+        #terminalWindow {
+            display: none;
+            width: 700px;
+            height: 500px;
+            background-color: #2c2c2c;
+            border: none;
+            position: absolute;
+            z-index: 1000;
+            top: 50%; /* Position verticale */
+            left: 50%; /* Position horizontale */
+            transform: translate(-50%, -50%); /* Centre la fenêtre */
+        }
+
+        #titleBar {
+            background-color: #8F8F8F;
+            color: #000000;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-size: 14px;
+            height: 30px;
+            cursor: move;
+        }
+
+        #titleBar span {
+            color: #000000;
+        }
+
+        #closeButton {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            background-color: #666666;
+            border: none;
+            color: white;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 50px;
+            height: 30px;
+        }
+
+        #closeButton:hover {
+            background-color: rgb(255, 58, 58);
+        }
+
+        #output {
+            background-color: black;
+            padding: 10px;
+            height: calc(100% - 40px);
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid #888;
+        }
+
+        #commandInput {
+            width: 100%;
+            background-color: black;
+            color: white;
+            border: none;
+            outline: none;
+            padding: 10px;
+            border: 1px solid #888;
+            
+        }
+
+               
+    
+        .dummy {
+            color: #ff0000;
+        }
+
+        /* Écran de verrouillage */
+        .lock-screen {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Masquer les écrans au chargement initial */
+        #lockScreen, #desktop {
+            display: none;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 3px solid #0078D7;
+            cursor: pointer;
+            font-size: 1.25rem;
+            text-align: center;
+            line-height: 50px;
+            background: #fff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.23);
+
+        }
+
+        .profile-container h2 {
+            margin: 10px 0 0;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        /* Conteneur pour le champ de saisie du mot de passe et le bouton */
+        .password-container {
+            display: flex;
+            align-items: center;
+            position: relative; /* Position relative pour contenir l'icône */
+        }
+
+        .password-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            height: 40px; /* Assure une hauteur égale au bouton */
+            width:250px;
+            box-sizing: border-box; /* Gère le padding pour éviter les décalages */
+            padding-right: 40px; /* Espace pour l'icône */
+            margin-top: -1px; /* Ajuste cette valeur pour descendre le champ de saisie */
+        }
+
+        #passwordInput {
+            width: 100%;
+            padding-right: 30px; /* Espace pour l'icône */
+        }
+
+        #togglePassword {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: black;
+            z-index: 1000;
+        }
+
+        .password-container button {
+            padding: 0 15px; /* Ajout d'espace sur les côtés */
+            font-size: 20px;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            height: 40px; /* Assure une hauteur égale au champ de saisie */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0px; /* Ajustement pour éliminer toute bordure ou écart résiduel */
+            margin-top: -1px; /* Ajuste cette valeur pour descendre le champ de saisie */
+        }
+
+
+        .lock-screen #errorMessage {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Bureau */
+        .desktop {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            background-color: linear-gradient(245.59deg, #189CD8 0%, #036c9c 28.53%, #013750 75.52%);
+            position: relative;
+        }
+
+        /* Icônes sur le bureau */
+        .icon {
+            width: 80px;
+            text-align: center;
+            margin: 20px;
+            cursor: pointer;
+            position: absolute;
+            top: 10%;
+            left: 5%;
+        }
+
+        .icon img {
+            width: 100px;
+            height: 100px;
+            
+        }
+
+        /* Fenêtre d'application */
+        .app-window {
+            display: none;
+            width: 600px;
+            height: 400px;
+            background-color: #191919;
+            border: 1px solid #888;
+            position: absolute;
+            z-index: 1;
+            top: 50%; /* Position verticale */
+            left: 50%; /* Position horizontale */
+            transform: translate(-50%, -50%); /* Centre la fenêtre */
+        }
+
+        .app-window.active {
+            z-index: 10; /* Amène la fenêtre active au premier plan */
+        }
+
+        .app-window a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .app-window a i{
+            font-size: 25px;
+        }
+
+        .window-header {
+            background-color: #8F8F8F;
+            color: #000000;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-size: 14px;
+            height: 30px;
+            cursor: move;
+        }
+
+        .window-content {
+            padding: 10px;
+        }
+
+        /* Barre des tâches */
+        .taskbar {
+            width: 100%;
+            height: 50px;
+            background-color: #242424;
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            justify-content: center; /* Centre le contenu horizontalement */
+            align-items: center; /* Centre le contenu verticalement */
+        }
+
+        .taskbar i{
+            color: #EEC142;
+        }
+
+        #Guide i{
+            color: white;
+        }
+
+        .taskbar-icons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Menu démarrer */
+        .start-menu {
+            width: 25%;
+            background-color: #242424;
+            color: white;
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            display: none;
+            margin-bottom: 1.5%;
+            margin-left: 38%;
+            border-radius: 2%;
+            max-width: 25%;
+            z-index: 1001;
+        }
+
+        .start-menu ul {
+            list-style: none;
+            padding: 10px;
+        }
+
+        .start-menu li {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .start-menu li:hover {
+            background-color: #313131;
+        }
+
+        /* Bouton démarrer transparent */
+        .start-button {
+            background: none; /* Transparent */
+            border: none; /* Pas de bordure */
+            cursor: pointer;
+            padding: 20px; /* Ajustez selon vos préférences */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%; /* Prend toute la hauteur de la barre des tâches */
+            margin-top: auto;
+        }
+
+        /* Style de l'icône Microsoft */
+        .start-button i {
+            font-size: 40px; /* Taille de l'icône, ajustez selon vos besoins */
+            background: linear-gradient(45deg, #7CDCFF, #0E9FFF); /* Dégradé */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Applique le dégradé comme couleur de texte */
+        }
+
+        .taskbar-icons {
+            display: flex; /* Utiliser flexbox pour l'alignement des icônes */
+            align-items: center; /* Centre les icônes verticalement */
+        }
+
+        .task-icon {
+            margin: 0 10px; /* Ajoute un espacement entre les icônes */
+            cursor: pointer; /* Change le curseur pour indiquer que c'est cliquable */
+        }
+
+        .task-icon i {
+            font-size: 40px; /* Taille de l'icône, ajustez selon vos besoins */
+        }
+
+        /* game snake */
+
+        @font-face {
+            font-family: "game";
+            src: url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;800&display=swap");
+        }
+
+        canvas {
+        background-color: #181825;
+        margin-top: 25px; /* Ajoute de l'espace entre les boutons et le canvas */
+        }
+        .container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        }
+        #ui {
+        display: flex;
+        align-items: center;
+        font-size: 10px;
+        flex-flow: column;
+        margin-left: 10px;
+        }
+        .wrapper h2 {
+        font-weight: 900;
+        font-size: 10px;
+        letter-spacing: 8px;
+        margin-bottom: 30px;
+        transform: rotate(270deg);
+        }
+        #score {
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: 800;
+        transform: rotate(-90deg);
+        }
+        .noselect {
+        user-select: none;
+        }
+        #replay {
+        font-size: 10px;
+        padding: 10px 20px;
+        background: #6e7888;
+        border: none;
+        color: #222738;
+        border-radius: 40px;
+        font-weight: 800;
+        transform: rotate(270deg);
+        cursor: pointer;
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #replay:hover {
+        background: #4cffd7;
+        }
+
+        #reset-max-score {
+        position: absolute; /* Utilise le positionnement absolu */
+        width: 88px; /* Largeur */
+        height: 32px; /* Hauteur */
+        font-size: 10px;
+        padding: 10px 20px;
+        background: #6e7888;
+        border: none;
+        color: #222738;
+        border-radius: 40px;
+        font-weight: 800;
+        transform: rotate(0deg);
+        cursor: pointer;
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #reset-max-score:hover {
+        background: #ff4c4c;
+        }
+
+        #next-button {
+        position: absolute; /* Utilise le positionnement absolu */
+        width: 88px; /* Largeur */
+        height: 32px; /* Hauteur */
+        font-size: 10px;
+        padding: 10px 20px;
+        background: #6e7888;
+        border: none;
+        color: #222738;
+        border-radius: 40px;
+        font-weight: 800;
+        transform: rotate(0deg);
+        cursor: pointer;
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #next-button:hover {
+        background: #F7819F;
+        }
+
+        .button-table {
+            padding-right: 260px;
+            display: flex; /* Utiliser flexbox pour l'alignement */
+        }
+
+        .button-table table {
+            border-collapse: collapse; /* Supprime les espaces entre les cellules */
+            width: 100%; /* Le tableau prend toute la largeur disponible */
+        }
+
+        .button-table td {
+            border: none; /* Aucune bordure visible */
+            padding: 10px; /* Espace autour des boutons */
+            padding-left: 200px;
+            text-align: center; /* Centrer le contenu du tableau */
+        }
+
+        #author {
+        width: 100%;
+        bottom: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: inherit;
+        text-transform: uppercase;
+        padding-left: 35px;
+        }
+        #author span {
+        font-size: 10px;
+        margin-left: 20px;
+        color: inherit;
+        letter-spacing: 4px;
+        }
+        #author h1 {
+        font-size: 25px;
+        }
+        .wrapper {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+        #replay {
+            margin-bottom: 20px;
+        }
+        #replay, h2 {
+            transform: rotate(0deg);
+        }
+        #reset-max-score {
+            margin-bottom: 20px;
+        }
+        #reset-max-score, h2 {
+            transform: rotate(0deg);
+        }
+        #next-button {
+            margin-bottom: 20px;
+        }
+        #next-button, h2 {
+            transform: rotate(0deg);
+        }
+        #ui {
+            flex-flow: row wrap;
+            margin-bottom: 20px;
+        }
+        #score {
+            margin-top: 0;
+            margin-left: 20px;
+        }
+        .container {
+            flex-flow: column wrap;
+        }
+        }
+
+        #Snake {
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Jeu du carré */
+        
+        #carre {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* Pour le positionnement interne */
+        }
+
+        #carre h1 {
+            text-align: center;
+            font-size: 25px;
+            width: 100%;
+            bottom: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: inherit;
+            text-transform: uppercase;
+            padding-left: 35px;
+        }
+
+        #carre p {
+            margin-left: 10%; /* Aligner à 20% du bord gauche */
+            max-width: 80%;    /* Ne pas dépasser 60% de la largeur totale */
+            font-size: 20px;
+        }
+
+        #carre ul {
+            margin-left: 15%; /* Aligner à 20% du bord gauche */
+            max-width: 60%;    /* Ne pas dépasser 60% de la largeur totale */
+            font-size: 20px;
+        }
+
+        #carre span {
+            font-size: 10px;
+            margin-left: 20px;
+            color: inherit;
+            letter-spacing: 4px;
+            width: 100%;
+            bottom: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: inherit;
+            text-transform: uppercase;
+            padding-left: 35px;
+        }
+
+        #carre div {
+            width: 80px;
+            height: 80px;
+            background-color: lightgrey;
+            display: inline-block;
+            margin: 7px;
+            position: relative;
+            left: 43%;
+            font-size: 30px; /* Taille de la police pour agrandir les chiffres */
+            text-align: center; /* Centrage horizontal */
+            line-height: 80px; /* Centrage vertical basé sur la hauteur de la boîte */
+            color: transparent;
+        }
+
+        #carre div:hover {
+            background-color: darkgrey;
+            color: white;
+        }
+
+        #carre .select {
+            background-color: #F7819F;
+        }
+
+        #carre .select:hover {
+            background-color: #F5A9E1;
+        }
+
+        #carre .deselect {
+            background-color: lightgrey;
+        }
+
+        #carre button:focus {
+            outline: 0;
+        }
+
+        #carre #retour {
+            position: absolute;
+            font-size: 10px;
+            padding: 10px 20px;
+            background: #6e7888;
+            border: none;
+            color: #222738;
+            border-radius: 40px;
+            font-weight: 800;
+            transform: rotate(0deg);
+            cursor: pointer;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 20px;
+        }
+
+        #carre #retour:hover {
+            background: #F7819F;
+        }
+
+        @media (max-width: 600px) {
+            #carre #retour {
+                transform: rotate(0deg);
+            }
+        }
+
+        #carre #openModalBtn {
+            position: absolute;
+            font-size: 10px;
+            padding: 10px 20px;
+            background: #6e7888;
+            border: none;
+            color: #222738;
+            border-radius: 40px;
+            font-weight: 800;
+            transform: rotate(0deg);
+            cursor: pointer;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            top: 80px;
+            margin-left: 20px;
+        }
+
+        #carre #openModalBtn:hover {
+            background: #4cffd7;
+        }
+
+        @media (max-width: 600px) {
+            #carre #openModalBtn {
+                transform: rotate(0deg);
+            }
+        }
+
+        #carre #next-button {
+            position: absolute;
+            font-size: 10px;
+            padding: 10px 20px;
+            background: #6e7888;
+            border: none;
+            color: #222738;
+            border-radius: 40px;
+            font-weight: 800;
+            transform: rotate(0deg);
+            cursor: pointer;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #carre #next-button:hover {
+            background: #F7819F;
+        }
+
+        @media (max-width: 600px) {
+            #carre #next-button {
+                transform: rotate(0deg);
+            }
+        }
+
+        #carre .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        #carre .modal-content {
+            background-color: #2c2c2c;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 900px;
+            text-align: left;
+            border-radius: 10px;
+            color: #ffffff;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        #carre .modal-content h1 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        #carre .close {
+            color: #ffffff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #carre .close:hover,
+        #carre .close:focus {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        
+        h3{
+            color:#686868;
+            font-size:15px;
+            cursor:default;
+            z-index: 1;
+        }
+        .light{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            points-events:none;
+            background: radial-gradient(circle at var(--x) var(--y), transparent 0%, rgba(0, 0, 0, 0.95) 3%);
+            z-index: 1;
+        }
+
+       
+        .Utilisateur{
+            z-index: 2; 
+        }
+
+        :root {
+            --x: 50%; /* Valeur par défaut pour x */
+            --y: 50%; /* Valeur par défaut pour y */
+        }
+        
+        
+        
+    </style>
+</head>
+
+<script>
+    // Fonction pour demander le nom et le stocker dans le localStorage
+    function demanderNom() {
+        let nom = localStorage.getItem('nom');
+        while (!nom) {
+            // Demandez le nom à l'utilisateur jusqu'à ce qu'il entre un nom valide
+            nom = prompt("Veuillez entrer votre nom :");
+            if (nom) {
+                // Enregistrez le nom dans le localStorage
+                localStorage.setItem('nom', nom);
+                alert(`Bienvenue, ${nom} !\nVous décidez d'aller voir le chef de projet, mais à votre arrivée, il est absent. Son ordinateur est allumé, mais vérrouillé. Que cache-t-il ? Peut-être que vous trouverez des indices en accédant à son PC...`);
+            } else {
+                alert("Le nom est obligatoire. Veuillez entrer un nom.");
+            }
+        }
+    }
+
+    // Appeler la fonction lors du chargement de la page
+    window.onload = function() {
+        demanderNom();
+        afficherContenu();
+    };
+
+    // Fonction pour afficher le contenu de la page après que le nom a été saisi
+    function afficherContenu() {
+        const nom = localStorage.getItem('nom');
+        document.getElementById('contenu').innerText = `Bonjour, ${nom}! Voici le contenu de la page.`;
+    }
+
+    // Écouter les événements de clavier pour détecter Ctrl + X
+    document.addEventListener('keydown', function(event) {
+        // Vérifier si Ctrl (ou Cmd sur Mac) et X sont pressés
+        if ((event.ctrlKey || event.metaKey) && event.key === 'x') {
+            localStorage.removeItem('nom'); // Effacer le nom du localStorage
+            alert("Le nom a été effacé du localStorage.");
+        }
+    });
+</script>
+
+<body>
+
+    <!-- Écran de verrouillage -->
+    <div class="lock-screen" id="lockScreen">
+        <div class="Utilisateur">
+            <div class="profile-container">
+                <img src="profile.jpeg" alt="Photo de profil" class="profile-pic">
+                <h2>Thomas R.</h2>
+            </div>
+            <div class="password-container">
+                <input type="password" id="passwordInput" placeholder="Mot de passe">
+                <i id="togglePassword" class="ri-eye-off-line"></i>
+                <button onclick="unlock()" id="unlockButton">→</button>
+            </div>
+            <p id="errorMessage"></p>
+        </div>
+        <br><br><br>
+        <section id="Black">
+            <h3>Lorsque la lumière s'efface et que l'ombre règne, le mot de passe apparaît.</h3>
+        </section>
+          <div class="light"></div>
+    </div>
+
+    <!-- Bureau virtuel (masqué tant que verrouillé) -->
+    <div class="desktop" id="desktop">
+        
+        <div id="Snake" class="container noselect">
+            
+            <div class="button-table">
+                <table>
+                    <tr>
+                        <td style="text-align: center;">
+                            <button id="reset-max-score">RESET</button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button id="next-button" style="display: none;">SUIVANT</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div class="wrapper">
+                <button id="replay">
+                    <i class="fas fa-play"></i> RESTART
+                </button>
+                <div id="canvas"></div>
+                <div id="ui">
+                    <h2>SCORE</h2>
+                    <span id="score">00</span>
+                </div>
+            </div>
+        
+            <div id="author">
+                <h1>GAME</h1> <span>by Recyclea</span>
+            </div>
+        </div>
+
+        <div id="carre" class="container carre">
+            <br><br>
+            <button id="retour">RETOUR</button> 
+            <button id="next-button" style="display: none;">SUIVANT</button>
+            <!-- Le bouton pour ouvrir la fenêtre -->
+            <button id="openModalBtn">AIDE</button>
+            <br><br><br><br><br><br><br><br><br><br><br><br>
+            <h1>Le carré</h1>
+            <br><br>
+            <p>Vous êtes face à un ancien terminal sécurisé du Projet Phoenix. <br>Les rumeurs disent que ce terminal a été conçu pour protéger un code secret, nécessaire pour la suite de votre enquête.</p>
+            <br>
+            <p>Votre objectif est d'activer la séquence de déverrouillage en trouvant la bonne combinaison :</p>
+            <br>
+            <ul>
+                <li>Vous devez réactiver les bords du carré en cliquant sur les touches appropriées. Une fois les bonnes touches activées, les bords du carré s’illumineront en rose, confirmant que la séquence est correcte.</li>
+                <li>Attention, chaque clic est crucial. Vous pouvez interagir avec n'importe quelle touche, même celles que vous avez déjà activées.</li>
+                <li>Il n'y a qu'une seule séquence correcte, composée de 4 touches distinct. Une fois trouvée, elle formera un code à 4 chiffres qui sera la clé pour accéder à un fichier sécurisé.</li>
+            </ul>
+            <br><br>
+            <br><br>
+            <h1>GAME</h1> <span>by Recyclea</span>
+
+            <!-- La fenêtre modale dans une section -->
+            <section id="instructionsModal" class="modal">
+                <article class="modal-content">
+                    <span class="close">&times;</span>
+                    <h1>Aide</h1>
+                    <br>
+                    <p>Voici un coup de pouce pour te familiariser avec le terminal.</p>
+                    <p>Ne t'attend pas à ce que je fasse tout à ta place, c’est à toi de déchiffrer.</p>
+                    <p>Trois pas en avant, c'est tout ce qu'il te faut pour trouver la clé.</p>
+                    <br>
+                    <p>Si la touche D est cliquée :</p>
+                    <ul>
+                        <li>Les touches F, I et K deviennent roses.</li>
+                        <li>Les touches E et G deviennent grises.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche E est cliquée :</p>
+                    <ul>
+                        <li>Les touches D, G et H deviennent roses.</li>
+                        <li>Les touches I et L deviennent grises.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche F est cliquée :</p>
+                    <ul>
+                        <li>Les touches E, G et L deviennent roses.</li>
+                        <li>La touches K devient grise.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche G est cliquée :</p>
+                    <ul>
+                        <li>Les touches D, K et L deviennent roses.</li>
+                        <li>Les touches F et J deviennent grises.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche H est cliquée :</p>
+                    <ul>
+                        <li>Les touches F, J et K deviennent roses.</li>
+                        <li>La touches G devient grise.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche I est cliquée :</p>
+                    <ul>
+                        <li>Les touches G et H deviennent roses.</li>
+                        <li>Les touches D et F deviennent grises.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche J est cliquée :</p>
+                    <ul>
+                        <li>La touches H devient rose.</li>
+                        <li>Les touches E, G, I et K deviennent grises.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche K est cliquée :</p>
+                    <ul>
+                        <li>Les touches D, F et H deviennent roses.</li>
+                        <li>Les touches G, K et L deviennent grises.</li>
+                    </ul>
+                    <br>
+                    <p>Si la touche L est cliquée :</p>
+                    <ul>
+                        <li>Les touches G, I et L deviennent roses.</li>
+                        <li>La touches H devient grise.</li>
+                    </ul>
+                </article>
+            </section>
+        </div> 
+
+        <!-- Fenêtres d'applications -->
+        <div class="app-window" id="explorerWindow" style="display: none;" onclick="bringToFront(this)">
+            <div class="window-header" onmousedown="startDrag(event, 'explorerWindow')">
+                <span>Dossier</span>
+                <button id="closeButton" onclick="closeApp('explorerWindow')">X</button>
+            </div>
+            <div class="window-content">
+                <a href="TOP SECRET.zip" download="TOP SECRET.zip"><i class="ri-folder-zip-fill"></i> TOP SECRET</a>
+            </div>
+        </div>
+
+        <div class="app-window" id="app1Window" style="display: none;" onclick="bringToFront(this)">
+            <div class="window-header" onmousedown="startDrag(event, 'app1Window')">
+                <span>Guide</span>
+                <button id="closeButton" onclick="closeApp('app1Window')">X</button>
+            </div>
+            <div class="window-content">
+                <br>
+                <p>Bonjour, je vous écris aujourd'hui dans une situation d'urgence. 
+                    J'ai développé une intelligence artificielle nommée Helios, qui a malheureusement échappé à mon contrôle. 
+                    Cette IA a bloqué l'accès au dossier "TOP SECRET", qui contiennent des informations cruciales pour sa désactivation.</p>
+                <br>
+                <p>Helios a mis en place une série de défis pour protéger le code d'accès à ce dossier. 
+                    La première étape consiste à battre le score qu'elle a défini sur le jeu suivant. 
+                    Il est impératif que vous réussissiez cette étape afin de progresser et d'accéder aux informations nécessaires.</p>
+                <p>Votre succès dans ce défi est vital pour restaurer le contrôle et neutraliser Helios. 
+                    Je compte sur votre ingéniosité et votre détermination.</p>
+                <br>
+                <p>Bonne chance.</p>
+                <br>
+                <p>Cordialement,<br>
+                    Thomas R.</p>
+            </div>
+        </div>
+
+        <div id="terminalWindow">
+            <div id="titleBar" onmousedown="startDrag(event, 'terminalWindow')" onclick="bringToFront(this)">
+                <span>Administrator: Command Prompt</span>
+                <button id="closeButton" onclick="closeTerminal()">X</button>
+            </div>
+            <div id="output"></div>
+            <input type="text" id="commandInput" onkeypress="handleCommand(event)" placeholder="Indiquez une adresse IP valide..." />
+        </div> 
+
+        <!-- Barre des tâches -->
+        <div class="taskbar">
+            <button id="startButton" class="start-button" onclick="toggleStartMenu()">
+                <i class="ri-microsoft-fill"></i>
+            </button>
+            <div class="taskbar-icons">
+                <div class="task-icon" onclick="toggleApp('explorerWindow')">
+                    <i class="ri-folder-3-fill"></i>
+                </div>
+                <div id="Guide" class="task-icon" onclick="toggleApp('app1Window')">
+                    <i class="ri-sticky-note-fill"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu démarrer -->
+        <div class="start-menu" id="startMenu">
+            <ul>
+                <li onclick="openTerminal()"><i class="ri-terminal-window-fill"></i> Invite de commandes</li>
+                <li onclick="toggleApp('explorerWindow')"><i class="ri-folder-3-fill"></i> Explorateur de fichiers</li>
+                <li onclick="toggleApp('app1Window')"><i class="ri-sticky-note-fill"></i> Guide</li>
+                <li onclick="shutdown()"><i class="ri-shut-down-line"></i></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+
+
+        function bringToFront(windowElement) {
+            // Enlever la classe active de toutes les fenêtres
+            const allWindows = document.querySelectorAll('.app-window');
+            allWindows.forEach(window => {
+                window.classList.remove('active');
+                window.style.zIndex = 1; // Remettre le z-index à la valeur par défaut
+            });
+
+            // Ajouter la classe active à la fenêtre cliquée
+            windowElement.classList.add('active');
+            windowElement.style.zIndex = 10; // Amène la fenêtre au premier plan
+        }
+        
+        // Afficher l’écran correct après vérification de l’état de connexion
+        window.addEventListener('load', () => {
+            const isUnlocked = localStorage.getItem('isUnlocked');
+
+            // Masquer les écrans d'abord, puis afficher celui nécessaire
+            setTimeout(() => {
+                if (isUnlocked === 'true') {
+                    document.getElementById('desktop').style.display = 'block';
+                } else {
+                    document.getElementById('lockScreen').style.display = 'flex';
+                }
+            }, 10); // Petite pause pour garantir que le CSS est chargé
+        });
+
+        // Déverrouillage avec mot de passe
+        function unlock() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const desktop = document.getElementById('desktop');
+            const lockScreen = document.getElementById('lockScreen');
+            const correctPassword = "Eclipse";
+
+            if (passwordInput.value === correctPassword) {
+                lockScreen.style.display = 'none';
+                desktop.style.display = 'block';
+                localStorage.setItem('isUnlocked', 'true'); // Enregistre l'état de déverrouillage
+                errorMessage.textContent = ""; // Réinitialiser le message d'erreur
+                alert(`Bravo ${nom} ! Tu as maintenant accès à l'ordinateur du chef de projet. Prenez votre temps, chaque document pourrait être une pièce du puzzle. Le mystère du CDS est peut-être plus proche que vous ne le pensez...`);
+            } else if (passwordInput.value.toLowerCase() === "eclipse") {
+                errorMessage.textContent = "Veuillez commencer par une majuscule.";
+            } else {
+                errorMessage.textContent = "Mot de passe incorrect. Veuillez réessayer.";
+            }
+        }
+
+        // Affichage et Masquage du Mot de Passe
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordInput = document.getElementById("passwordInput");
+            const icon = document.getElementById("togglePassword");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text"; // Rendre le mot de passe visible
+                icon.classList.remove("ri-eye-off-line");
+                icon.classList.add("ri-eye-line"); // Changer l'icône en œil ouvert
+            } else {
+                passwordInput.type = "password"; // Cacher le mot de passe
+                icon.classList.remove("ri-eye-line");
+                icon.classList.add("ri-eye-off-line"); // Changer l'icône en œil fermé
+            }
+        });
+
+        // Cacher le mot de passe dès qu'on commence à taper
+        document.getElementById("passwordInput").addEventListener("input", function () {
+            this.type = "password"; // Assure que le champ reste masqué
+            const icon = document.getElementById("togglePassword");
+            
+            // Mettre à jour l'icône en œil fermé si elle n'y est pas déjà
+            if (!icon.classList.contains("ri-eye-off-line")) {
+                icon.classList.remove("ri-eye-line");
+                icon.classList.add("ri-eye-off-line");
+            }
+        });
+
+        // Effet power of light
+        document.addEventListener('DOMContentLoaded', () => {
+            var pos = document.documentElement;
+
+            // Initialiser les variables pour la position du filtre dès le chargement
+            pos.style.setProperty('--x', '50%'); // Valeur initiale de x
+            pos.style.setProperty('--y', '50%'); // Valeur initiale de y
+
+            // Mettre à jour les variables lors du mouvement de la souris
+            pos.addEventListener('mousemove', e => {
+                pos.style.setProperty('--x', e.clientX + 'px');
+                pos.style.setProperty('--y', e.clientY + 'px');
+            });
+        });
+
+        // Retourne à l'écran de verrouillage
+        function shutdown() {
+            document.getElementById('desktop').style.display = 'none';
+            document.getElementById('lockScreen').style.display = 'flex';
+            document.getElementById('passwordInput').value = ''; // Efface le champ de mot de passe
+            localStorage.setItem('isUnlocked', 'false'); // Réinitialise l'état de déverrouillage
+            toggleStartMenu(); // Ferme le menu démarrer si ouvert
+        }
+
+        // Vérifie l'état de verrouillage au chargement de la page
+        window.addEventListener('load', () => {
+            const isUnlocked = localStorage.getItem('isUnlocked');
+            if (isUnlocked === 'true') {
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('desktop').style.display = 'block';
+            }
+        });
+
+       // Fonction pour afficher ou masquer le menu démarrer
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            // Affiche ou masque le menu démarrer
+            startMenu.style.display = (startMenu.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Écouteur pour valider avec Entrée
+        document.getElementById('passwordInput').addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                unlock();
+            }
+        });
+
+        function toggleApp(appId) {
+            const appWindow = document.getElementById(appId);
+            
+            // Vérifiez si la fenêtre est déjà affichée
+            if (appWindow.style.display === 'block') {
+                // Si oui, fermez-la
+                appWindow.style.display = 'none';
+            } else {
+                // Ouvrez la fenêtre demandée
+                appWindow.style.display = 'block';
+                appWindow.classList.add('active'); // Ajoute la classe active pour le z-index
+            }
+        }
+
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.style.display = startMenu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Ouvre une application en la rendant visible
+        function openApp(appId) {
+            document.getElementById(appId).style.display = 'flex';
+        }
+
+        // Ferme une application en la cachant
+        function closeApp(appId) {
+            document.getElementById(appId).style.display = 'none';
+        }
+
+        // Ferme le menu démarrer lorsqu'on clique en dehors
+        document.addEventListener('click', (event) => {
+            const startMenu = document.getElementById('startMenu');
+            const isClickInside = startMenu.contains(event.target) || event.target.closest('.taskbar');
+            
+            if (!isClickInside) {
+                startMenu.style.display = 'none';
+            }
+        });
+
+
+    </script>
+    
+    <script>
+        /**
+     * Snake game created with plain JavaScript by Ibrahim fariat.
+     * Follow me if you like it!
+     **/
+    
+            let dom_replay = document.querySelector("#replay");
+            let dom_score = document.querySelector("#score");
+            let dom_canvas = document.createElement("canvas");
+            document.querySelector("#canvas").appendChild(dom_canvas);
+            let CTX = dom_canvas.getContext("2d");
+    
+            const W = (dom_canvas.width = 400);
+            const H = (dom_canvas.height = 400);
+    
+            let snake,
+            food,
+            currentHue,
+            cells = 20,
+            cellSize,
+            isGameOver = false,
+            tails = [],
+            score = 00,
+            maxScore = window.localStorage.getItem("maxScore") || undefined,
+            particles = [],
+            splashingParticleCount = 20,
+            cellsCount,
+            requestID;
+    
+            let helpers = {
+            Vec: class {
+                constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                }
+                add(v) {
+                this.x += v.x;
+                this.y += v.y;
+                return this;
+                }
+                mult(v) {
+                if (v instanceof helpers.Vec) {
+                    this.x *= v.x;
+                    this.y *= v.y;
+                    return this;
+                } else {
+                    this.x *= v;
+                    this.y *= v;
+                    return this;
+                }
+                }
+            },
+            isCollision(v1, v2) {
+                return v1.x == v2.x && v1.y == v2.y;
+            },
+            garbageCollector() {
+                for (let i = 0; i < particles.length; i++) {
+                if (particles[i].size <= 0) {
+                    particles.splice(i, 1);
+                }
+                }
+            },
+            drawGrid() {
+                CTX.lineWidth = 1.1;
+                CTX.strokeStyle = "#232332";
+                CTX.shadowBlur = 0;
+                for (let i = 1; i < cells; i++) {
+                let f = (W / cells) * i;
+                CTX.beginPath();
+                CTX.moveTo(f, 0);
+                CTX.lineTo(f, H);
+                CTX.stroke();
+                CTX.beginPath();
+                CTX.moveTo(0, f);
+                CTX.lineTo(W, f);
+                CTX.stroke();
+                CTX.closePath();
+                }
+            },
+            randHue() {
+                return ~~(Math.random() * 360);
+            },
+            hsl2rgb(hue, saturation, lightness) {
+                if (hue == undefined) {
+                return [0, 0, 0];
+                }
+                var chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+                var huePrime = hue / 60;
+                var secondComponent = chroma * (1 - Math.abs((huePrime % 2) - 1));
+    
+                huePrime = ~~huePrime;
+                var red;
+                var green;
+                var blue;
+    
+                if (huePrime === 0) {
+                red = chroma;
+                green = secondComponent;
+                blue = 0;
+                } else if (huePrime === 1) {
+                red = secondComponent;
+                green = chroma;
+                blue = 0;
+                } else if (huePrime === 2) {
+                red = 0;
+                green = chroma;
+                blue = secondComponent;
+                } else if (huePrime === 3) {
+                red = 0;
+                green = secondComponent;
+                blue = chroma;
+                } else if (huePrime === 4) {
+                red = secondComponent;
+                green = 0;
+                blue = chroma;
+                } else if (huePrime === 5) {
+                red = chroma;
+                green = 0;
+                blue = secondComponent;
+                }
+    
+                var lightnessAdjustment = lightness - chroma / 2;
+                red += lightnessAdjustment;
+                green += lightnessAdjustment;
+                blue += lightnessAdjustment;
+    
+                return [
+                Math.round(red * 255),
+                Math.round(green * 255),
+                Math.round(blue * 255)
+                ];
+            },
+            lerp(start, end, t) {
+                return start * (1 - t) + end * t;
+            }
+            };
+    
+            let KEY = {
+            ArrowUp: false,
+            ArrowRight: false,
+            ArrowDown: false,
+            ArrowLeft: false,
+            resetState() {
+                this.ArrowUp = false;
+                this.ArrowRight = false;
+                this.ArrowDown = false;
+                this.ArrowLeft = false;
+            },
+            listen() {
+                addEventListener(
+                "keydown",
+                (e) => {
+                    if (e.key === "ArrowUp" && this.ArrowDown) return;
+                    if (e.key === "ArrowDown" && this.ArrowUp) return;
+                    if (e.key === "ArrowLeft" && this.ArrowRight) return;
+                    if (e.key === "ArrowRight" && this.ArrowLeft) return;
+                    this[e.key] = true;
+                    Object.keys(this)
+                    .filter((f) => f !== e.key && f !== "listen" && f !== "resetState")
+                    .forEach((k) => {
+                        this[k] = false;
+                    });
+                },
+                false
+                );
+            }
+            };
+    
+            class Snake {
+            constructor(i, type) {
+                this.pos = new helpers.Vec(W / 2, H / 2);
+                this.dir = new helpers.Vec(0, 0);
+                this.type = type;
+                this.index = i;
+                this.delay = 5;
+                this.size = W / cells;
+                this.color = "white";
+                this.history = [];
+                this.total = 1;
+            }
+            draw() {
+                let { x, y } = this.pos;
+                CTX.fillStyle = this.color;
+                CTX.shadowBlur = 20;
+                CTX.shadowColor = "rgba(255,255,255,.3 )";
+                CTX.fillRect(x, y, this.size, this.size);
+                CTX.shadowBlur = 0;
+                if (this.total >= 2) {
+                for (let i = 0; i < this.history.length - 1; i++) {
+                    let { x, y } = this.history[i];
+                    CTX.lineWidth = 1;
+                    CTX.fillStyle = "rgba(225,225,225,1)";
+                    CTX.fillRect(x, y, this.size, this.size);
+                }
+                }
+            }
+            walls() {
+                let { x, y } = this.pos;
+                if (x + cellSize > W) {
+                this.pos.x = 0;
+                }
+                if (y + cellSize > W) {
+                this.pos.y = 0;
+                }
+                if (y < 0) {
+                this.pos.y = H - cellSize;
+                }
+                if (x < 0) {
+                this.pos.x = W - cellSize;
+                }
+            }
+            controlls() {
+                let dir = this.size;
+                if (KEY.ArrowUp) {
+                this.dir = new helpers.Vec(0, -dir);
+                }
+                if (KEY.ArrowDown) {
+                this.dir = new helpers.Vec(0, dir);
+                }
+                if (KEY.ArrowLeft) {
+                this.dir = new helpers.Vec(-dir, 0);
+                }
+                if (KEY.ArrowRight) {
+                this.dir = new helpers.Vec(dir, 0);
+                }
+            }
+            selfCollision() {
+                for (let i = 0; i < this.history.length; i++) {
+                let p = this.history[i];
+                if (helpers.isCollision(this.pos, p)) {
+                    isGameOver = true;
+                }
+                }
+            }
+            update() {
+                this.walls();
+                this.draw();
+                this.controlls();
+                if (!this.delay--) {
+                if (helpers.isCollision(this.pos, food.pos)) {
+                    incrementScore();
+                    particleSplash();
+                    food.spawn();
+                    this.total++;
+                }
+                this.history[this.total - 1] = new helpers.Vec(this.pos.x, this.pos.y);
+                for (let i = 0; i < this.total - 1; i++) {
+                    this.history[i] = this.history[i + 1];
+                }
+                this.pos.add(this.dir);
+                this.delay = 5;
+                this.total > 3 ? this.selfCollision() : null;
+                }
+            }
+            }
+    
+            class Food {
+            constructor() {
+                this.pos = new helpers.Vec(
+                ~~(Math.random() * cells) * cellSize,
+                ~~(Math.random() * cells) * cellSize
+                );
+                this.color = currentHue = `hsl(${~~(Math.random() * 360)},100%,50%)`;
+                this.size = cellSize;
+            }
+            draw() {
+                let { x, y } = this.pos;
+                CTX.globalCompositeOperation = "lighter";
+                CTX.shadowBlur = 20;
+                CTX.shadowColor = this.color;
+                CTX.fillStyle = this.color;
+                CTX.fillRect(x, y, this.size, this.size);
+                CTX.globalCompositeOperation = "source-over";
+                CTX.shadowBlur = 0;
+            }
+            spawn() {
+                let randX = ~~(Math.random() * cells) * this.size;
+                let randY = ~~(Math.random() * cells) * this.size;
+                for (let path of snake.history) {
+                if (helpers.isCollision(new helpers.Vec(randX, randY), path)) {
+                    return this.spawn();
+                }
+                }
+                this.color = currentHue = `hsl(${helpers.randHue()}, 100%, 50%)`;
+                this.pos = new helpers.Vec(randX, randY);
+            }
+            }
+    
+            class Particle {
+            constructor(pos, color, size, vel) {
+                this.pos = pos;
+                this.color = color;
+                this.size = Math.abs(size / 2);
+                this.ttl = 0;
+                this.gravity = -0.2;
+                this.vel = vel;
+            }
+            draw() {
+                let { x, y } = this.pos;
+                let hsl = this.color
+                .split("")
+                .filter((l) => l.match(/[^hsl()$% ]/g))
+                .join("")
+                .split(",")
+                .map((n) => +n);
+                let [r, g, b] = helpers.hsl2rgb(hsl[0], hsl[1] / 100, hsl[2] / 100);
+                CTX.shadowColor = `rgb(${r},${g},${b},${1})`;
+                CTX.shadowBlur = 0;
+                CTX.globalCompositeOperation = "lighter";
+                CTX.fillStyle = `rgb(${r},${g},${b},${1})`;
+                CTX.fillRect(x, y, this.size, this.size);
+                CTX.globalCompositeOperation = "source-over";
+            }
+            update() {
+                this.draw();
+                this.size -= 0.3;
+                this.ttl += 1;
+                this.pos.add(this.vel);
+                this.vel.y -= this.gravity;
+            }
+            }
+    
+            function incrementScore() {
+            score++;
+            dom_score.innerText = score.toString().padStart(2, "0");
+            }
+    
+            function particleSplash() {
+            for (let i = 0; i < splashingParticleCount; i++) {
+                let vel = new helpers.Vec(Math.random() * 6 - 3, Math.random() * 6 - 3);
+                let position = new helpers.Vec(food.pos.x, food.pos.y);
+                particles.push(new Particle(position, currentHue, food.size, vel));
+            }
+            }
+    
+            function clear() {
+            CTX.clearRect(0, 0, W, H);
+            }
+    
+            let wrapper = document.querySelector('.wrapper');
+    
+            function resetMaxScore() {
+              maxScore = 0; // Réinitialise le score maximum à 0
+              window.localStorage.setItem("maxScore", maxScore); // Met à jour le stockage local
+              alert("Le score maximum a été réinitialisé !"); // Alerte pour confirmation
+              dom_score.innerText = "00"; // Réinitialise l'affichage du score
+              location.reload();
+            }
+    
+            function initialize() {
+              CTX.imageSmoothingEnabled = false;
+              KEY.listen();
+              cellsCount = cells * cells;
+              cellSize = W / cells;
+              snake = new Snake();
+              food = new Food();
+              dom_replay.addEventListener("click", reset, false);
+              document.querySelector("#reset-max-score").addEventListener("click", resetMaxScore, false);
+              
+              // Masquer le wrapper si le score maximum est supérieur ou égal à 5
+              if (maxScore >= 35) {
+                  document.querySelector("#next-button").style.display = 'block'; // Affiche le bouton "Suivant"
+              } else {
+                  document.querySelector("#next-button").style.display = 'none'; // Cache le bouton "Suivant"
+              }
+            
+              // Gestionnaire d'événements pour le bouton "Suivant"
+              document.querySelector("#next-button").addEventListener("click", function() {
+                  alert("Bravo ! Tu as battu le score de Helios. Passer au défi suivant !");
+                  document.getElementById("Snake").style.display = "none";
+                  document.getElementById("carre").style.display = "block";
+              });
+              
+              loop();
+            }
+    
+            function loop() {
+            clear();
+            if (!isGameOver) {
+                requestID = setTimeout(loop, 1000 / 60);
+                helpers.drawGrid();
+                snake.update();
+                food.draw();
+                for (let p of particles) {
+                p.update();
+                }
+                helpers.garbageCollector();
+            } else {
+                clear();
+                gameOver();
+            }
+            }
+    
+            function gameOver() {
+            maxScore ? null : (maxScore = score);
+            score > maxScore ? (maxScore = score) : null;
+            window.localStorage.setItem("maxScore", maxScore);
+            CTX.fillStyle = "#4cffd7";
+            CTX.textAlign = "center";
+            CTX.font = "bold 30px Poppins, sans-serif";
+            CTX.fillText("GAME OVER", W / 2, H / 2);
+            CTX.font = "15px Poppins, sans-serif";
+            CTX.fillText(`SCORE   ${score}`, W / 2, H / 2 + 60);
+            CTX.fillText(`MAXSCORE   ${maxScore}`, W / 2, H / 2 + 80);
+            }
+    
+            function reset() {
+            dom_score.innerText = "00";
+            score = "00";
+            snake = new Snake();
+            food.spawn();
+            KEY.resetState();
+            isGameOver = false;
+            clearTimeout(requestID);
+            location.reload();
+            loop();
+            }
+    
+            initialize();
+    
+      </script>
+    
+
+    
+    
+
+        <script>
+            let awaitingPort = false;
+            let awaitingTicket = false;
+            let awaitingModule = false;
+            let awaitingCode = false;
+            let isDragging = false;
+            let offsetX, offsetY;
+            let scrambledInterval; // Ajout d'une variable pour stocker l'intervalle
+            let draggedWindow = null; // Variable pour suivre la fenêtre en cours de déplacement
+
+            // Liste des codes à 16 chiffres
+            const permutations = [
+                "5938 1047 3829 5621", "5938 1047 5621 3829", "5938 3829 1047 5621", "5938 3829 5621 1047",
+                "5938 5621 1047 3829", "5938 5621 3829 1047", "1047 5938 3829 5621", "1047 5938 5621 3829",
+                "1047 3829 5938 5621", "1047 3829 5621 5938", "1047 5621 5938 3829", "1047 5621 3829 5938",
+                "3829 5938 1047 5621", "3829 5938 5621 1047", "3829 1047 5938 5621", "3829 1047 5621 5938",
+                "3829 5621 5938 1047", "3829 5621 1047 5938", "5621 5938 1047 3829", "5621 5938 3829 1047",
+                "5621 1047 5938 3829", "5621 1047 3829 5938", "5621 3829 5938 1047", "5621 3829 1047 5938"
+            ];
+
+            function openTerminal() {
+                document.getElementById("terminalWindow").style.display = "block";
+                document.getElementById("commandInput").focus();
+            }
+
+            function closeTerminal() {
+                clearInterval(scrambledInterval); // Arrêter l'intervalle pour le texte scrambled
+                document.getElementById("output").innerHTML = "";
+                document.getElementById("commandInput").value = "";
+                awaitingPort = false;
+                awaitingTicket = false;
+                awaitingModule = false;
+                awaitingCode = false;
+                document.getElementById("commandInput").placeholder = "Indiquez une adresse IP valide...";
+                document.getElementById("terminalWindow").style.display = "none";
+            }
+
+            function handleCommand(event) {
+                if (event.key === "Enter") {
+                    const input = document.getElementById("commandInput");
+                    const output = document.getElementById("output");
+                    const enteredValue = input.value.trim();
+
+                    output.innerHTML += "> " + enteredValue + "\n";
+
+                    if (!awaitingPort && !awaitingTicket && !awaitingModule && !awaitingCode) {
+                        if (enteredValue === "192.168.40.99") {
+                            output.innerHTML += "Indiquez le numéro de port valide...\n";
+                            input.placeholder = "Indiquez le numéro de port valide...";
+                            awaitingPort = true;
+                        } else {
+                            output.innerHTML += "Erreur 0047 : Adresse IP inconnue\n";
+                        }
+                    } else if (awaitingPort) {
+                        if (enteredValue === "6") {
+                            output.innerHTML += "Vous êtes désormais connecté au programme du projet Phoenix.\n";
+                            input.placeholder = "Rechercher un ticket...";
+                            awaitingPort = false;
+                            awaitingTicket = true;
+                        } else {
+                            output.innerHTML += "Erreur 0047 : Numéro de port invalide\n";
+                        }
+                    } else if (awaitingTicket) {
+                        if (enteredValue === "1204") {
+                            output.innerHTML += "Réponse automatique de Helios : Modification du protocole d'arrêt d'urgence\n";
+                            output.innerHTML += "Quel module souhaitez-vous consulter ?\n";
+                            input.placeholder = "Indiquez le numéro de module...";
+                            awaitingTicket = false;
+                            awaitingModule = true;
+                        } else {
+                            output.innerHTML += "Erreur 0047 : Ticket invalide\n";
+                        }
+                    } else if (awaitingModule) {
+                        if (enteredValue === "3") {
+                            output.innerHTML += "Module 3 : Réinitialisation du code d'arrêt d'urgence par Helios...\n";
+                            output.innerHTML += "Hélios préfère ne pas fournir le code exact. Il propose de mélanger les quatre sections de son code à 16 chiffres....\n";
+                            output.innerHTML += "Helios vous souhaite bonne chance pour remettre les sections du code dans le bon ordre.🙂\n";
+                            startScrambledTextEffect(output); // Démarrer l'affichage en boucle des codes
+                            input.placeholder = "Indiquez le code à 16 chiffres...";
+                            awaitingModule = false;
+                            awaitingCode = true;
+                        } else {
+                            output.innerHTML += "Erreur 0047 : Le module demandé n'est pas disponible.\n";
+                        }
+                    } else if (awaitingCode) {
+                        const correctCode = permutations[14]; 
+                        const nom = localStorage.getItem('nom');
+                        if (enteredValue === correctCode) {
+                            output.innerHTML = ""; // Effacer tout l'historique
+                            output.innerHTML += `Félicitations ${nom},\n\n`;
+                            output.innerHTML += "Vous avez accompli ce que beaucoup pensaient impossible. En résolvant les mystères et en déchiffrant les secrets vous avez non seulement mis fin à l’IA Helios, mais aussi prouvé que la collaboration et la persévérance vous rend meilleur.\n\n"; 
+                            output.innerHTML += "Ne perdez jamais de vue l’impact de votre contribution. Ensemble, nous pouvons transformer l’incertitude en opportunités. Gardez cette flamme d’espoir vivante, car c’est notre esprit d’équipe qui nous guidera vers des jours meilleurs.\n\n";
+                            output.innerHTML += "Merci d'avoir été les héros de cette aventure !\n\n";
+                            clearInterval(scrambledInterval); // Arrêter l'intervalle pour le texte scrambled
+                            awaitingCode = false; // Arrêter l'attente du code
+                            input.placeholder = ""; // Réinitialiser l'invite
+                        } else {
+                            output.innerHTML += "Erreur 0047 : Code d'arrêt d'urgence invalide, veuillez réessayer...\n";
+                        }
+                    }
+
+                    // Réinitialiser l'entrée
+                    input.value = "";
+                    output.scrollTop = output.scrollHeight; // Faire défiler vers le bas
+                }
+            }
+
+            function startScrambledTextEffect(output) {
+                let i = 0;
+                scrambledInterval = setInterval(() => { // Utilisez cette variable pour stocker l'intervalle
+                    const scrambledText = permutations[i];
+
+                    // Remplacer uniquement le code à 16 chiffres tout en conservant l'historique
+                    const lines = output.innerHTML.split('\n');
+                    lines[lines.length - 1] = "> " + scrambledText; // Remplace la dernière ligne
+
+                    // Reconstituer le contenu de sortie
+                    output.innerHTML = lines.join('\n');
+
+                    i = (i + 1) % permutations.length; // Passer au code suivant en boucle
+
+                    output.scrollTop = output.scrollHeight; // Faire défiler vers le bas
+                }, 2000); // Changer le délai à 2000 millisecondes pour 2 secondes
+            }
+
+            function startDrag(e, windowId) {
+                isDragging = true;
+                draggedWindow = document.getElementById(windowId);
+
+                // Appliquer bringToFront ici
+                bringToFront(draggedWindow);
+
+                offsetX = e.clientX - draggedWindow.offsetLeft;
+                offsetY = e.clientY - draggedWindow.offsetTop;
+
+                document.addEventListener('mousemove', dragWindow);
+                document.addEventListener('mouseup', stopDrag);
+            }
+
+            function dragWindow(e) {
+                if (isDragging && draggedWindow) {
+                    const windowWidth = draggedWindow.offsetWidth; // Obtenez la largeur dynamique de la fenêtre
+                    const windowHeight = draggedWindow.offsetHeight; // Obtenez la hauteur dynamique de la fenêtre
+                    const maxX = document.documentElement.clientWidth - windowWidth; // Limite droite
+                    const maxY = document.documentElement.clientHeight - windowHeight; // Limite basse
+
+                    let newX = e.clientX - offsetX; // Calculer la nouvelle position X
+                    let newY = e.clientY - offsetY; // Calculer la nouvelle position Y
+
+                    // Assurez-vous que newX et newY ne dépassent pas les limites
+                    newX = Math.max(0, Math.min(newX, maxX)); // Limite gauche et droite
+                    newY = Math.max(0, Math.min(newY, maxY)); // Limite haute et basse
+
+                    // Appliquer la nouvelle position à la fenêtre
+                    draggedWindow.style.left = `${newX}px`;
+                    draggedWindow.style.top = `${newY}px`;
+                }
+            }
+
+            function stopDrag() {
+                isDragging = false;
+                draggedWindow = null; // Réinitialiser la fenêtre en cours de déplacement
+                document.removeEventListener('mousemove', dragWindow);
+                document.removeEventListener('mouseup', stopDrag);
+            }
+        </script>
+
+        <!-- Le carré -->
+            <script>
+                // Intersection Observer pour détecter la visibilité du div #carre
+                document.addEventListener("DOMContentLoaded", function () {
+                    let carreElement = document.getElementById("carre");
+
+                    // Fonction pour afficher #carre lorsque visible
+                    function handleVisibility(entries, observer) {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                carreElement.style.display = "block"; // Affiche #carre
+                                observer.unobserve(carreElement); // Arrête d'observer une fois visible
+
+                                // Code JavaScript à exécuter une fois #carre visible
+                                initializeCarreContent();
+                            }
+                        });
+                    }
+
+                    // Intersection Observer pour surveiller #carre
+                    let observer = new IntersectionObserver(handleVisibility, {
+                        root: null, // viewport
+                        threshold: 0.1 // visible à 10% ou plus
+                    });
+
+                    observer.observe(carreElement);
+                });
+
+                // Code JavaScript pour le contenu de #carre
+                function initializeCarreContent() {
+                    for (let i = 0; i < 9; i++) {
+                        let box = document.createElement("div");
+                        box.innerHTML = `${i + 1}`;  // Ajoute le chiffre correspondant
+                        box.setAttribute("id", `${i + 1}`);
+                        if (i % 3 == 0) {
+                            let br = document.createElement("br");
+                            document.querySelector("#carre").appendChild(br);
+                        }
+                        document.querySelector("#carre").appendChild(box);
+                    }
+
+                    const boite1 = document.getElementById("1");
+                    const boite2 = document.getElementById("2");
+                    const boite3 = document.getElementById("3");
+                    const boite4 = document.getElementById("4");
+                    const boite5 = document.getElementById("5");
+                    const boite6 = document.getElementById("6");
+                    const boite7 = document.getElementById("7");
+                    const boite8 = document.getElementById("8");
+                    const boite9 = document.getElementById("9");
+
+                    let clickCount = 0;
+
+                    let game = document.querySelectorAll("#carre div");
+                    game.forEach(b => b.addEventListener("click", function () {
+                        if (this.id == 1) {
+                            boite3.className = "select";
+                            boite6.className = "select";
+                            boite8.className = "select";
+                            boite2.className = "deselect";
+                            boite4.className = "deselect";
+                        }
+                        if (this.id == 2) {
+                            boite1.className = "select";
+                            boite4.className = "select";
+                            boite5.className = "select";
+                            boite9.className = "deselect";
+                            boite6.className = "deselect";
+                        }
+                        if (this.id == 3) {
+                            boite2.className = "select";
+                            boite4.className = "select";
+                            boite9.className = "select";
+                            boite8.className = "deselect";
+                        }
+                        if (this.id == 4) {
+                            boite1.className = "select";
+                            boite8.className = "select";
+                            boite9.className = "select";
+                            boite3.className = "deselect";
+                            boite7.className = "deselect";
+                        }
+                        if (this.id == 5) {
+                            boite3.className = "select";
+                            boite7.className = "select";
+                            boite8.className = "select";
+                            boite4.className = "deselect";
+                        }
+                        if (this.id == 6) {
+                            boite4.className = "select";
+                            boite5.className = "select";
+                            boite3.className = "deselect";
+                            boite1.className = "deselect";
+                        }
+                        if (this.id == 7) {
+                            boite5.className = "select";
+                            boite2.className = "deselect";
+                            boite4.className = "deselect";
+                            boite6.className = "deselect";
+                            boite8.className = "deselect";
+                        }
+                        if (this.id == 8) {
+                            boite1.className = "select";
+                            boite3.className = "select";
+                            boite5.className = "select";
+                            boite4.className = "deselect";
+                            boite8.className = "deselect";
+                            boite9.className = "deselect";
+                        }
+                        if (this.id == 9) {
+                            boite4.className = "select";
+                            boite6.className = "select";
+                            boite9.className = "select";
+                            boite5.className = "deselect";
+                        }
+
+                        // Changer la couleur du texte de la boîte cliquée
+                        this.style.color = "white"; // Changer la couleur du texte de la boîte cliquée
+
+                        // Incrémenter le compteur de clics
+                        clickCount++;
+
+                        // Vérifier si le compteur atteint 4
+                        if (clickCount >= 5) {
+                            // Réinitialiser la couleur du texte de toutes les boîtes
+                            game.forEach(box => box.style.color = "transparent"); // Remettre la couleur à transparent
+                            clickCount = 0; // Réinitialiser le compteur de clics
+                            location.reload();
+                        }
+                    }));
+
+                    let inter = setInterval(win, 100);
+
+                    function win() {
+                        if (boite1.className == "select" && boite2.className == "select" && boite3.className == "select" && boite4.className == "select" && boite5.className == "deselect" && boite6.className == "select" && boite7.className == "select" && boite8.className == "select" && boite9.className == "select") {
+                            alert("Bravo, tu as découvert le code secret ! Conserve-le soigneusement, il pourrait te servir plus tard.");
+                            clearInterval(inter);
+                            document.querySelector("#next-button").style.display = 'block'; // Affiche le bouton "Suivant"
+                        } else {
+                            document.querySelector("#next-button").style.display = 'none'; // Cache le bouton "Suivant"
+                            return;
+                        }
+                    }
+
+                    // Gestionnaire d'événements pour le bouton "Suivant"
+                    document.querySelector("#next-button").addEventListener("click", function () {
+                        alert("Passer au niveau suivant !");
+                    });
+
+                    let modal = document.getElementById("instructionsModal");
+                    let btn = document.getElementById("openModalBtn");
+                    let span = document.getElementsByClassName("close")[0];
+
+                    // Quand l'utilisateur clique sur le bouton, on ouvre la fenêtre modale
+                    btn.onclick = function () {
+                        modal.style.display = "block";
+                    }
+
+                    // Quand l'utilisateur clique sur la croix, on ferme la fenêtre modale
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    // Quand l'utilisateur clique en dehors de la fenêtre modale, on la ferme aussi
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                }
+                
+            </script>
+            
+
+</body>
+
+    <script>
+        // Gestionnaire d'événements pour le bouton "Retour"
+        document.querySelector("#retour").addEventListener("click", function() {
+            location.reload();
+            });
+    </script>
+
+</html>

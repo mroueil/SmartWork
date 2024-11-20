@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet CNFPT</title>
+	<link rel="icon" type="image/png" href="Icon.png">
+
+    <!-- boxicons link -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- remixicons link -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins',sans-serif;
+            list-style: none;
+            text-decoration: none;
+        }
+
+		header{
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 33px 9%;
+            background: transparent;
+        }
+
+        .logo{
+            font-size: 30px;
+            font-weight: 700;
+            color: white;
+            position: relative; /* Nécessaire pour positionner le menu déroulant */
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none; /* Caché par défaut */
+            position: absolute;
+            top: 100%; /* Positionne juste en dessous du logo */
+            left: 0;
+            background-color: rgba(3, 108, 156, 0.8); /* Couleur #036c9c avec 50% de transparence */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 200px; /* Ajustez la largeur si nécessaire */
+            z-index: 1000; /* Assure que le menu est au-dessus des autres éléments */
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown-menu ul li {
+            padding: 10px;
+        }
+
+        .dropdown-menu ul li a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-menu ul li a:hover {
+            background-color: #013750; /* Couleur d'arrière-plan lors du survol */
+        }
+
+        .navlist{
+            display: flex;
+			padding-right: 150px;
+        }
+
+        .navlist a{
+            color: white;
+            margin-left: 60px;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all .55s ease;
+        }
+
+        .navlist a:hover{
+            border-bottom: 2px solid white;
+        }
+
+		/* Style pour masquer le sous-menu par défaut */
+        .navlist .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(3, 108, 156, 0.5); /* Couleur #036c9c avec 50% de transparence */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .navlist .dropdown-content li {
+            list-style-type: none;
+            padding: 8px 16px;
+        }
+
+        .navlist .dropdown-content li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Afficher le sous-menu lorsqu'il est actif */
+        .navlist .dropdown-content.show {
+            display: block;
+        }
+
+        /**********************************************/
+
+        #menu-icon{
+            color: white;
+            font-size: 35px;
+            z-index: 10001;
+            cursor: pointer;
+            display: none;
+        }
+
+        .hero{
+            height: 100%;
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(245.59deg, #189CD8 0%, #036c9c 28.53%, #013750 75.52%);
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            align-items: center;
+            gap: 2rem;
+        }
+
+        section{
+            padding: 0 19%;
+        }
+
+        .hero-text h5{
+            font-size: 14px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero-text h1{
+            font-family: 'Permanent Marker', cursive;
+            font-size: 90px;
+            line-height: 1;
+            color: white;
+            margin: 0 0 45px;
+        }
+
+        .hero-text h4{
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .hero-text p{
+            font-size: 15px;
+            line-height: 1.9;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero-img img{
+            width: 700px;
+            height: auto;
+        }
+
+        .hero-text a{
+            display: inline-block;
+            color: white;
+            background: #036c9c;
+            border: 1px solid transparent;
+            padding: 12px 30px;
+            line-height: 1.4;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 30px;
+            text-transform: uppercase;
+            transition: all .55s ease;
+        }
+
+        .hero-text a:hover{
+            background: transparent;
+            border: 1px solid white;
+            transform: translateX(8px);
+        }
+
+        .hero-text a.ctaa{
+            background: transparent;
+            border: 1px solid white;
+            margin-left: 20px;
+        }
+
+        .hero-text a.ctaa i{
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .scroll-down{
+            position: absolute;
+            bottom: 6%;
+            right: 9%;
+        }
+
+        .scroll-down i{
+            display: block;
+            padding: 12px;
+            font-size: 25px;
+            color: white;
+            background: #036c9c;
+            border-radius: 30px;
+            transition: all .50s ease;
+        }
+
+        .scroll-down i:hover{
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 1535px){
+            header{
+                padding: 15px 3%;
+                transition: .2s;
+
+            }
+            .scroll-down{
+                right: 3%;
+                transition: .2s;
+            }
+        }
+
+        @media (max-width: 1460px){
+            section{
+                padding: 0 12%;
+                transition: .2s;
+            }
+        }
+
+        @media (max-width: 1340px){
+            .hero-img img{
+                width: 100%;
+                height: auto;
+            }
+            .hero-text h1{
+                font-size: 75px;
+                margin: 0 0 30px;
+            }
+            .hero-text h5{
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 1695px){
+            section{
+                padding: 0 3%;
+                transition: .2s;
+            }
+            .hero-text{
+                padding-top: 115px;
+            }
+            .hero-img{
+                text-align: center;
+            }
+            .hero-img img{
+                width: 560px;
+                height: auto;
+            }
+            .hero{
+                height: 100%;
+                gap: 1rem;
+                grid-template-columns: 1fr;
+            }
+            .scroll-down{
+                display: none;
+            }
+        }
+
+        @media (max-width: 990px){
+            #menu-icon{
+                display: block;
+            }
+            .navlist{
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                width: 300px;
+                height: 40vh;
+                background: rgba(3, 108, 156, 0.5); /* Couleur #036c9c avec 50% de transparence */
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding: 50px 20px;
+                transition: all .55s ease;
+            }
+            .navlist a{
+                display: block;
+                margin-left: 0;
+                margin: 7px 0;
+            }
+            .navlist.open{
+                right: 0;
+            }
+        }
+
+        @media (max-width: 680px){
+            .hero-img img{
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #013750;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .modal-content h1 {
+            font-family: 'Permanent Marker', cursive;
+            
+            font-size: 24px;
+            color: #ffffff; /* Couleur du texte, vous pouvez changer selon votre préférence */
+            margin-bottom: 20px; /* Espace entre le titre et la vidéo */
+        }
+
+        .close {
+            color: #ffffff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+		form {
+			margin-bottom: 20px; /* Ajoute une marge en bas du tableau */
+			margin: 0 auto; /* Centre le formulaire horizontalement */
+			border-collapse: collapse;
+			border: none; /* Supprime la bordure */
+			border-radius: 10px; /* Ajouter des coins arrondis */
+			letter-spacing: 1px;
+			font-family: sans-serif;
+			width: 90%; /* Largeur du formulaire, ajustez selon vos besoins */
+			max-width: 1550px; /* Largeur maximale du formulaire pour éviter qu'il ne devienne trop large */
+			background-color: transparent; /* Changer la couleur de fond du formulaire */
+			
+		}
+		
+		fieldset {
+			border: none; /* Supprime la bordure */
+			color: #ffffff;
+		}
+
+		div {
+			margin-bottom: 8px; /* Ajoute un espace de 20px en bas de chaque div */
+		}
+		
+
+		#bouton {
+			border-radius: 5px; /* Ajouter des coins arrondis */
+            background-color: transparent;
+            color: #ffffff;
+			border: 1px solid #d2d3d3;
+            padding: 1.5px 10px;
+            cursor: pointer; 
+            text-decoration: none;
+            text-align: center;
+			font-weight: bold; /* Rendre le texte en gras */
+        }
+
+        #bouton:hover {
+            background-color: #013750;
+			border: 1px solid #ffffff;
+			color: #ffffff;
+        }
+		
+		
+        label {
+            font-weight: normal;
+        }
+		
+		.required {
+        color: #90aeef;
+		}
+
+		#courrielPrincipal,
+		#courrielSecours,
+		#lockedReason,
+		#sAMAccountName,
+		#Utilisateur,
+		#dateModification,
+		#dateErreur,
+		#dateDerniereConnexion,
+		#dateCreation,
+		#Matricule,
+		#Identifiant,
+		#Département,
+		#Délégation,
+		#IdFicheAgent,
+		#Mailperso,
+		#Mailpro,
+		#MauvaiseAdMail,
+		#BonneAdMail,
+		#collectivite,
+		#Nom,
+		#AdMailGestionnaire,
+		#telephone{
+			 margin-left: 1%;
+			 padding:1px;
+			 position:absolute;
+			 font-size: medium;
+			 width:300px;
+			 
+		}
+
+		#CompteRetrouve,
+		#etatCompteAgent,
+		#AccountLocked,
+		#compteECommunautes{
+			 margin-left: 1%;
+			 padding:1px;
+			 /* border-radius: 5px; */
+			 position:absolute;
+			 /* transition: .5s ease;  */
+			 /* top: 17.8%; */
+			 /* left: 26%; */
+			 font-size: medium;
+			 width:100px;
+		}
+		
+		::selection {
+			background-color: #f7f7f7; /* Changer la couleur de surlignage */
+			color: #2a2a2d; /* Changer la couleur du texte surligné */
+		}
+		
+		
+		/************************************************************************/
+		
+		/* Styles pour les champs de saisie */
+		
+		input[type="text"] {
+			margin-left: 1%;
+			padding: 1px;
+			font-size: medium;
+			width: 300px;
+			border: 1px solid #d2d3d3;
+			color: #ffffff;
+			/*font-weight: bold; /* Rendre le texte en gras */
+			border-radius: 5px; /* Ajouter des coins arrondis */
+			
+		}
+		
+		input {
+			background-color: #013750;
+			border: 1px solid #ffffff;
+		}
+
+		/* Styles pour les champs de saisie au passage de la souris */
+		
+		input[type="text"]:hover {
+			background-color: #013750;
+			border: 1px solid #ffffff;
+			color: #ffffff;
+			font-weight: bold; /* Rendre le texte en gras */
+		}
+		
+		
+		 /* Lorsque le champ de saisie est en focus, changez sa largeur à 100% */
+		 input[type=text]:focus {
+			 width: 2%;
+			 border: 1px solid #90aeef;
+		 }
+		 
+		 input[type=text] {
+			  width: 2.7%;
+			  -webkit-transition: width 0.15s ease-in-out;
+			  transition: width 0.15s ease-in-out;
+		 }
+		 
+		 select {
+			border: 1px solid #ffffff;
+			background-color: #013750;
+			color: #ffffff;
+			/*font-weight: bold; /* Rendre le texte en gras */
+			border-radius: 5px; /* Ajouter des coins arrondis */
+		}
+		
+		 select:hover {
+			border: 1px solid #ffffff;
+			color: #ffffff;
+			font-weight: bold; /* Rendre le texte en gras */
+			
+		}
+		
+		select option:hover {
+			background-color: #90aeef; /* Couleur de fond au survol */
+			color: #3b3b3f; /* Couleur du texte au survol */
+		}
+		 
+				
+		/************************************************************************/
+
+
+		/*************************** Groupe d'affectation ***********************/
+
+		table {
+			
+			margin-bottom: 20px; /* Ajoute une marge en bas du tableau */
+			border-collapse: collapse;
+			border: transparent;
+			border-radius: 5px; /* Ajouter des coins arrondis */
+			letter-spacing: 1px;
+			font-family: sans-serif;
+			font-size: .8rem;
+			width: 90%; /* Largeur du tableau, ajustez selon vos besoins */
+			max-width: 1550px; /* Largeur maximale du tableau pour éviter qu'il ne devienne trop large */
+			color: #ffffff;
+		}
+		
+		.table-container {
+			border-radius: 10px; /* Ajouter des coins arrondis de 10 pixels */
+			overflow: hidden; /* Masquer le contenu dépassant des coins arrondis */
+		}
+
+		td,
+		th {
+			border: transparent;
+			border-radius: 15px; /* Ajouter des coins arrondis */
+			padding: 5px 10px;
+		}
+
+		td {
+			text-align: center;
+		}
+		
+        thead,
+        tfoot {
+            background-color: transparent;
+            color: #fff;
+        }
+
+        tbody {
+			background-color: transparent;
+		}
+
+
+		caption {
+			padding: 10px;
+			caption-side: bottom;
+		}
+
+    </style>
+
+    <!-- scrollreveal effect -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let menu = document.querySelector('#menu-icon');
+            let navlist = document.querySelector('.navlist');
+            
+            
+            menu.onclick = () => {
+                menu.classList.toggle('bx-x');
+                navlist.classList.toggle('open');
+            };
+
+			/* gérer le clic sur "Outils" et afficher/masquer le sous-menu. */
+
+            document.getElementById("tools-menu").addEventListener("click", function(event) {
+                event.preventDefault();
+                var submenu = document.getElementById("tools-submenu");
+                submenu.classList.toggle("show");
+            });
+
+            /* Fermer le sous-menu "outils" si on clique ailleurs sur la page */
+            window.onclick = function(event) {
+                if (!event.target.matches('#tools-menu')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+
+            
+            const sr = ScrollReveal({
+                distance: '65px',
+                duration: 2600,
+                delay: 450,
+                reset: true
+            });
+
+            sr.reveal('.hero-text', { delay: 200, origin: 'top' });
+            sr.reveal('.hero-img', { delay: 450, origin: 'top' });
+            sr.reveal('.scroll-down', { delay: 500, origin: 'right' });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let logo = document.querySelector('#logo');
+            let dropdownMenu = document.querySelector('#dropdown-menu');
+
+            logo.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Toggle the dropdown menu
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Optionnel : Fermer le menu si l'utilisateur clique en dehors
+            window.addEventListener('click', function(event) {
+                if (!logo.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        });
+
+		
+		/******************************** Groupe d'affectation *******************************/
+
+	    var Delegation;
+        var Groupe;
+
+		//Permet d'afficher l'ancienne délégation d'un département 
+		function search_delegation() {
+			let Departement = document.getElementById('searchbarDepartement').value;
+			let Structure = document.getElementById('searchbarStructure').value;
+			
+			
+			if (Departement == 01 || Departement == 03 || Departement == 07 || Departement == 15 || Departement == 26 || Departement == 38 || Departement == 42 || Departement == 43 || Departement == 63 || Departement == 69 || Departement == 73 || Departement == 74 || Structure == 03 || Structure == 21 || Structure == 22 || Structure == 80){
+				Delegation = "AURA" ;
+				Groupe = "AURA-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 21 || Departement == 07 || Departement == 25 || Departement == 39 || Departement == 58 || Departement == 70 || Departement == 71 || Departement == 89 || Departement == 90 || Structure == 04 || Structure == 09 || Structure == 81){
+				Delegation = "Bourgogne Franche-Comté" ;
+				Groupe = "BFC-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 22 || Departement == 29 || Departement == 35 || Departement == 56 || Structure == 05){
+				Delegation = "Bretagne" ;
+				Groupe = "BRE-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 20 || Structure == 08){
+				Delegation = "Corse" ;
+				Groupe = "CORS-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 18 || Departement == 28 || Departement == 36 || Departement == 37 || Departement == 41 || Departement == 45 || Structure == 06){
+				Delegation = "Centre-Val de Loire" ;
+				Groupe = "CVDL-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 08 || Departement == 10 || Departement == 51 || Departement == 52 || Departement == 54 || Departement == 55 || Departement == 57 || Departement == 67 || Departement == 68 || Departement == 88 || Structure == 01 || Structure == 07 || Structure == 12 || Structure == 82){
+				Delegation = "Grand Est" ;
+				Groupe = "GRE-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 971 || Structure == 31){
+				Delegation = "Guadeloupe" ;
+				Groupe = "GUA-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 973 || Structure == 33){
+				Delegation = "Guyane" ;
+				Groupe = "GUY-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 02 || Departement == 59 || Departement == 60 || Departement == 62 || Departement == 80 || Structure == 14 || Structure == 18 || Structure == 83){
+				Delegation = "Hauts de France" ;
+				Groupe = "HDF-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 972 || Structure == 32){
+				Delegation = "Martinique" ;
+				Groupe = "MAR-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 976 || Structure == 34){
+				Delegation = "Mayotte" ;
+				Groupe = "MAY-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 14 || Departement == 27 || Departement == 50 || Departement == 61 || Departement == 76 || Structure == 15 || Structure == 16 || Structure == 85){
+				Delegation = "Normandie" ;
+				Groupe = "NORM-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 16 || Departement == 17 || Departement == 19 || Departement == 23 || Departement == 24 || Departement == 33 || Departement == 40 || Departement == 47 || Departement == 64 || Departement == 79 || Departement == 86 || Departement == 87 || Structure == 02 || Structure == 11 || Structure == 19 || Structure == 86){
+				Delegation = "Nouvelle-Aquitaine" ;
+				Groupe = "NVA-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 09 || Departement == 11 || Departement == 12 || Departement == 30 || Departement == 31 || Departement == 32 || Departement == 34 || Departement == 46 || Departement == 48 || Departement == 65 || Departement == 66 || Departement == 81 || Departement == 82 || Structure == 10 || Structure == 13 || Structure == 87){
+				Delegation = "Occitanie" ;
+				Groupe = "OCC-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 04 || Departement == 05 || Departement == 06 || Departement == 13 || Departement == 83 || Departement == 84 || Structure == 20){
+				Delegation = "Provence-Alpes-Côte d'Azur" ;
+				Groupe = "PACA-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 44 || Departement == 49 || Departement == 53 || Departement == 72 || Departement == 85 || Structure == 17){
+				Delegation = "Pays de la Loire" ;
+				Groupe = "PDLL-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 974 || Structure == 26){
+				Delegation = "Réunion" ;
+				Groupe = "REU-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Departement == 75 || Departement == 77 || Departement == 78 || Departement == 91 || Departement == 92 || Departement == 93 || Departement == 94 || Departement == 95 || Structure == 00 || Structure == 23 || Structure == 24 || Structure == 84){
+				Delegation = "Ile de France" ;
+				Groupe = "IDF-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Structure == 45){
+				Delegation = "INSET DE DUNKERQUE" ;
+				Groupe = "DUN-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Structure == 46){
+				Delegation = "INSET DE NANCY" ;
+				Groupe = "NCY-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Structure == 47){
+				Delegation = "INSET D'ANGERS" ;
+				Groupe = "ANG-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Structure == 48){
+				Delegation = "INSET DE MONTPELLIER" ;
+				Groupe = "MON-MOA-N1-FORM-IEL-GDA" ;
+			}
+			else if (Structure == 49){
+				Delegation = "INSET DE STRASBOURG" ;
+				Groupe = "STR-MOE-N1-RSI" ;
+			}
+			else if (Departement == "" || Structure == ""){
+				Delegation = "" ;
+				Groupe = "" ;
+			}
+			else {
+				alert("Ce département n'est pas pris en charge. Merci de vérifier les régions correspondantes");
+			}
+			
+			
+			document.getElementById('delegation').innerHTML = Delegation ; 	
+			document.getElementById('groupe').innerHTML = Groupe ; 
+			
+		}
+
+		//Permet d'afficher le resultat lorsqu'on appuy sur la touche "Entrée" du clavier
+		document.addEventListener("keyup", function(event) {
+			if (event.keyCode === 13) {
+				search_delegation();
+				let Departement = document.getElementById('searchbarDepartement').value = "" ;
+				let Structure = document.getElementById('searchbarStructure').value = "" ;
+			}
+		});
+
+		function copyGroupe() {
+			// Sélectionne le texte à copier
+			var groupeText = document.getElementById("groupe").innerText;
+
+			// Crée un élément temporaire <textarea> pour stocker le texte à copier
+			var tempTextArea = document.createElement("textarea");
+			tempTextArea.value = groupeText;
+
+			// Ajoute l'élément temporaire à la page
+			document.body.appendChild(tempTextArea);
+
+			// Sélectionne et copie le texte dans le presse-papiers
+			tempTextArea.select();
+			document.execCommand("copy");
+
+			// Supprime l'élément temporaire
+			document.body.removeChild(tempTextArea);
+		}
+
+		function copyInset(text) {
+		  // Créer un élément temporaire de type textarea pour copier le texte
+		  var textarea = document.createElement("textarea");
+		  // Mettre le texte à copier dans l'élément textarea
+		  textarea.value = text;
+		  // Ajouter l'élément textarea à la fin du corps du document
+		  document.body.appendChild(textarea);
+		  // Sélectionner le contenu de l'élément textarea
+		  textarea.select();
+		  // Copier le texte sélectionné dans le presse-papiers
+		  document.execCommand("copy");
+		  // Supprimer l'élément textarea temporaire
+		  document.body.removeChild(textarea);
+		  
+		}
+
+		// Fonction pour copier le texte en fonction de la délégation
+		function copierCoordonnees() {
+			// Récupérer la valeur actuelle du champ délégation
+			let delegation = document.getElementById("delegation").innerHTML;
+
+			// Variable pour stocker le texte à copier
+			let texteACopier = "";
+
+			// Associer un texte spécifique à chaque délégation
+			switch (delegation) {
+				case "AURA":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 04 77 49 68 37 \n" + "Adresse mail : Francoise.BOYER@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Bourgogne Franche-Comté":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 03 80 74 77 14 \n" + "Adresse mail : celine.miguet@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Bretagne":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 38 78 94 91 \n" + "Adresse mail : Anne.PELLE@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Corse":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 04 42 29 64 35 \n" + "Adresse mail : Nathalie.NAILI@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Centre-Val de Loire":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 38 78 94 91 \n" + "Adresse mail : Anne.PELLE@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Grand Est":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 03 80 74 77 14 \n" + "Adresse mail : celine.miguet@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Guadeloupe":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 05 90 99 07 74 \n" + "Adresse mail : jules.OTTO@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Guyane":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 05 90 99 07 74 \n" + "Adresse mail : jules.OTTO@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Hauts de France":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 35 98 45 74 \n" + "Adresse mail : Cedric.LOUVRY@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Martinique":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 05 90 99 07 74 \n" + "Adresse mail : jules.OTTO@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Mayotte":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 62 90 06 47 \n" + "Adresse mail : Jocelyne.LIGDAMIS@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Normandie":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 35 98 45 74 \n" + "Adresse mail : Cedric.LOUVRY@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Nouvelle-Aquitaine":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 05 56 99 93 65 \n" + "Adresse mail : Cecile.OHEIX@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Occitanie":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 04 67 61 77 29 \n" + "Adresse mail : Christine.KHALKHAL@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Provence-Alpes-Côte d'Azur":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 04 42 29 64 35 \n" + "Adresse mail : Nathalie.NAILI@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Pays de la Loire":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 38 78 94 91 \n" + "Adresse mail : Anne.PELLE@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Réunion":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 02 62 90 06 47 \n" + "Adresse mail : Jocelyne.LIGDAMIS@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				case "Ile de France":
+					texteACopier = "Un nouveau menu « Apprentissage » a été rajouté dans inscription en ligne afin de permettre aux collectivités d\'accéder à la plateforme pour déclarer leur prévision de recrutement d\'apprentis.\n" + "Si vous rencontrer un point de blocage lors de l\'utilisation de celle-ci, veuillez soumettre votre demande au coordonnées suivante :\n\n" + "Téléphone : 01 46 48 46 35 \n" + "Adresse mail : Anthony.FOURNIER@cnfpt.fr\n\n" + "Vous souhaitant tout de même une agréable journée.";
+					break;
+				default:
+					texteACopier = "Délégation non reconnue.";
+					break;
+			}
+
+			// Copier le texte dans le presse-papiers
+			navigator.clipboard.writeText(texteACopier).then(function() {
+				// Message de confirmation si la copie a réussi
+				alert("Les coordonnées ont été copiées");
+			}, function() {
+				// Message d'erreur si la copie échoue
+				alert("Erreur lors de la copie des coordonnées.");
+			});
+		}
+
+		// Ajouter l'événement 'click' au bouton "Coordonnées mission apprentissage du CNFPT"
+		document.getElementById("copier-coordonnees").addEventListener("click", copierCoordonnees);
+</script>
+
+    </script>
+</head>
+<body>
+	
+		<header>
+			<a href="#" class="logo" id="logo">PROJET</a>
+			<a href="Groupes - Halloween.html" class="logo" id="Halloween">🕸</a>
+			<div class="dropdown-menu" id="dropdown-menu">
+				<ul>
+					<li><a href="index.html">CNFPT</a></li>
+					<li><a href="#">Projet 2</a></li>
+					<li><a href="#">Projet 3</a></li>
+					<li><a href="#">Projet 4</a></li>
+					<!-- Ajoutez plus de projets ici -->
+				</ul>
+			</div>
+
+			<ul class="navlist">
+				<li><a href="index.html">Accueil</a></li>
+				<li><a href="Consignes.html">Procédures</a></li>
+				<li><a href="Template.html">Template</a></li>
+				<li><a href="Groupes.html">Groupes</a></li>
+				<li><a href="Generateur.html">Générateur</a></li>
+				<li class="dropdown">
+					<a href="#" id="tools-menu">Outils</a>
+					<ul class="dropdown-content" id="tools-submenu">
+						<li><a href="https://envrec.sharepoint.com/sites/AltimanceaCDS-P06_CNFPT/Documents%20partages/Forms/AllItems.aspx?id=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2F03%5FCU%2FFormation%20CNFPT%2Fvang%40Inf%5FPrd%5FSL200149%5FRebond%5FRDP%5FC%5FSCC%5FCDS%5Fotp%2Erdp&viewid=7e309004%2D4cdd%2D434d%2D9cc0%2D518c4edf41ad&parent=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2F03%5FCU%2FFormation%20CNFPT" target="_blank">RDP Machine de rebond</a></li>
+						<li><a href="https://moncompte.cnfpt.fr/" target="_blank">Mon Compte CNFPT</a></li>
+						<li><a href="https://formadist.cnfpt.fr/gestion" target="_blank">FORMADIST</a></li>
+						<li><a href="https://auth.cnfpt.fr/carbon/admin/index.jsp" target="_blank">WSO2</a></li>
+						<li><a href="https://e-communautes.cnfpt.fr/admin/people" target="_blank">E-Communautés</a></li>
+						<li><a href="https://www.cnfpt.fr/rechercher-formation" target="_blank">Rechercher une formation</a></li>
+						<li><a href="https://cnfptprod.service-now.com/login.do" target="_blank">Service-Now</a></li>
+                        <li><a href="https://envrec.sharepoint.com/sites/AltimanceaCDS-P06_CNFPT/Documents%20partages/Forms/AllItems.aspx?csf=1&web=1&e=Q8ktv4&CID=06ac5205%2Dd04a%2D4f2b%2Dab33%2D7ec6ae50849f&FolderCTID=0x0120004482D408D6E9AA469EE16A5EE3DBFA3A&id=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2FCNFPT%2F03%5FCU%2FFiches%20signal%C3%A9tiques%20ServiceNow" target="_blank">Fiches signalétiques</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<div class="bx bx-menu" id="menu-icon"></div>
+		</header>
+	
+    
+    <section class="hero" id="cnfpt">
+        <div class="hero-text">
+			<center>
+				<table>
+					<thead>
+				<tr>		
+					<th colspan="2"><p style="color:#FFFFFF";><font size="5" face ="calibri"><b>Groupe d'affectation IEL en Délégation</b></p></th>
+				</tr>
+			</thead>
+			
+					<tr>
+											
+						<td>
+		
+							<!-- création du champ de recherche et du boutton "Valider" -->
+								<p><font size="4" face ="calibri">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Code structure :<input id="searchbarStructure"  type="text" 
+									name="search" placeholder="">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <button class="favorite styled"type="button" id="bouton"  onclick="search_delegation()">Valider</font></button></p>
+								<p><font size="4" face ="calibri">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Département :<input id="searchbarDepartement"  type="text" 
+									name="search" placeholder="">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <button class="favorite styled"type="button" id="bouton"  onclick="search_delegation()">Valider</font></button></p>
+		
+							<!-- Affiche le nom de l'ancienne délegation -->		
+							<p><font size="4" face ="calibri">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Délégation : &nbsp <b><span id="delegation"></span></b></font></p>
+							<p><font size="4" face ="calibri">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Groupe d'affectation : &nbsp <b><span id="groupe"></span></b></font>&nbsp &nbsp <button class="favorite styled" type="button" id="bouton" onclick="copyGroupe()">Copier</button></p> 
+								
+							
+							<button id="bouton" onclick="copierCoordonnees()">Coordonnées mission apprentissage du CNFPT</button>
+							
+							<br><br><br><br>
+							
+							<CENTER>
+							 
+							<font size="4">
+							<table>
+								<thead>
+									<tr>
+										<p><font size="4" face ="calibri"><b>Institut national spécialisé d'études territoriales (INSET)</b></p>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>
+										<td><CENTER><font size="4" face ="calibri">Inset Angers </CENTER></td>
+										<td><CENTER><font size="4" face ="calibri">ANG-MOA-N1-FORM-IEL-GDA</CENTER></td>
+										<td><button class="copy-button" type="button" id="bouton" onclick="copyInset('ANG-MOA-N1-FORM-IEL-GDA')">Copier</button></td>
+										<td>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>
+									</tr>
+								</tbody>
+								<tbody>
+									<tr>
+										<td></td>
+										<td><CENTER><font size="4" face ="calibri">Inset Dunkerque </CENTER></td>
+										<td><CENTER><font size="4" face ="calibri">DUN-MOA-N1-FORM-IEL-GDA</CENTER></td>
+										<td><button class="copy-button" type="button" id="bouton" onclick="copyInset('DUN-MOA-N1-FORM-IEL-GDA')">Copier</button></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<tbody>
+									<tr>
+										<td></td>
+										<td><CENTER><font size="4" face ="calibri">Inset Montpellier</CENTER></td>
+										<td><CENTER><font size="4" face ="calibri">MON-MOA-N1-FORM-IEL-GDA</CENTER></td>
+										<td><button class="copy-button" type="button" id="bouton" onclick="copyInset('MON-MOA-N1-FORM-IEL-GDA')">Copier</button></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<tbody>
+									<tr>
+										<td></td>
+										<td><CENTER><font size="4" face ="calibri">Inset Nancy</CENTER></td>
+										<td><CENTER><font size="4" face ="calibri">NCY-MOA-N1-FORM-IEL-GDA</CENTER></td>
+										<td><button class="copy-button" type="button" id="bouton" onclick="copyInset('NCY-MOA-N1-FORM-IEL-GDA')">Copier</button></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<tbody>
+									<tr>
+										<td></td>
+										<td><CENTER><font size="4" face ="calibri">INET Strasbourg</CENTER></td>
+										<td><CENTER><font size="4" face ="calibri">STR-MOE-N1-RSI</CENTER></td>
+										<td><button class="copy-button" type="button" id="bouton" onclick="copyInset('STR-MOE-N1-RSI')">Copier</button></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+		
+							</CENTER>
+						</td>
+					</tr>
+		
+			
+				</table>
+
+				<br>
+				<table class="styled-table"><tr><td><b>Utilisation du Code Structure :</b><br><br> Nous devons escalader en délégation pour modifier l`état d`une session d`inscription en terminée.<br>Le routage doit se faire vers la délégation qui a mis en place et organisé la formation en question.<br>Pour ce faire nous devons nous baser sur le code structure de la formation pour identifier la délégation organisatrice de la formation.<br><br>Exemple formation : <b>84</b>:SXNAA221 => <b>84</b> = code structure</td></tr></table>
+			</center>
+		</div>
+			
+
+    </section>
+
+    
+   
+
+    <div class="scroll-down">
+        <a href="#"><i class="ri-arrow-down-s-fill"></i></a>
+    </div>
+
+    
+    
+</body>
+</html>

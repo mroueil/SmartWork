@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet CNFPT</title>
+    <link rel="icon" type="image/png" href="Icon halloween.png">
+
+    <!-- boxicons link -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- remixicons link -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins',sans-serif;
+            list-style: none;
+            text-decoration: none;
+        }
+
+		header{
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 33px 9%;
+            background: transparent;
+        }
+
+        .logo{
+            font-size: 30px;
+            font-weight: 700;
+            color: white;
+            position: relative; /* Nécessaire pour positionner le menu déroulant */
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none; /* Caché par défaut */
+            position: absolute;
+            top: 100%; /* Positionne juste en dessous du logo */
+            left: 0;
+            background-color: rgba(216, 110, 24, 0.5); /* Couleur #036c9c avec 50% de transparence */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 200px; /* Ajustez la largeur si nécessaire */
+            z-index: 1000; /* Assure que le menu est au-dessus des autres éléments */
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown-menu ul li {
+            padding: 10px;
+        }
+
+        .dropdown-menu ul li a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-menu ul li a:hover {
+            background-color: #502701; /* Couleur d'arrière-plan lors du survol */
+        }
+
+        .navlist{
+            display: flex;
+            padding-right: 150px;
+        }
+
+        .navlist a{
+            color: white;
+            margin-left: 60px;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all .55s ease;
+        }
+
+        .navlist a:hover{
+            border-bottom: 2px solid white;
+        }
+
+        /* Style pour masquer le sous-menu par défaut */
+        .navlist .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(216, 110, 24, 0.5); /* Couleur #036c9c avec 50% de transparence */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .navlist .dropdown-content li {
+            list-style-type: none;
+            padding: 8px 16px;
+        }
+
+        .navlist .dropdown-content li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Afficher le sous-menu lorsqu'il est actif */
+        .navlist .dropdown-content.show {
+            display: block;
+        }
+
+        /**********************************************/
+
+        #menu-icon{
+            color: white;
+            font-size: 35px;
+            z-index: 10001;
+            cursor: pointer;
+            display: none;
+        }
+
+        .hero{
+            height: 100%;
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(245.59deg, #d86e18 0%, #9c5503 28.53%, #502701 75.52%);
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            align-items: center;
+            gap: 2rem;
+        }
+
+        section{
+            padding: 0 19%;
+        }
+
+        .hero-text h5{
+            font-size: 14px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero-text h1{
+            font-family: 'Permanent Marker', cursive;
+            font-size: 90px;
+            line-height: 1;
+            color: white;
+            margin: 0 0 45px;
+        }
+
+        .hero-text h4{
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .hero-text p{
+            font-size: 15px;
+            line-height: 1.9;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero-img img{
+            width: 700px;
+            height: auto;
+        }
+
+        .hero-text a{
+            display: inline-block;
+            color: white;
+            background: #9c5503;
+            border: 1px solid transparent;
+            padding: 12px 30px;
+            line-height: 1.4;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 30px;
+            text-transform: uppercase;
+            transition: all .55s ease;
+        }
+
+        .hero-text a:hover{
+            background: transparent;
+            border: 1px solid white;
+            transform: translateX(8px);
+        }
+
+        .hero-text a.ctaa{
+            background: transparent;
+            border: 1px solid white;
+            margin-left: 20px;
+        }
+
+        .hero-text a.ctaa i{
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .scroll-down{
+            position: absolute;
+            bottom: 6%;
+            right: 9%;
+        }
+
+        .scroll-down i{
+            display: block;
+            padding: 12px;
+            font-size: 25px;
+            color: white;
+            background: #d86e18;
+            border-radius: 30px;
+            transition: all .50s ease;
+        }
+
+        .scroll-down i:hover{
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 1535px){
+            header{
+                padding: 15px 3%;
+                transition: .2s;
+
+            }
+            .scroll-down{
+                right: 3%;
+                transition: .2s;
+            }
+        }
+
+        @media (max-width: 1460px){
+            section{
+                padding: 0 12%;
+                transition: .2s;
+            }
+        }
+
+        @media (max-width: 1340px){
+            .hero-img img{
+                width: 100%;
+                height: auto;
+            }
+            .hero-text h1{
+                font-size: 75px;
+                margin: 0 0 30px;
+            }
+            .hero-text h5{
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 1695px){
+            section{
+                padding: 0 3%;
+                transition: .2s;
+            }
+            .hero-text{
+                padding-top: 115px;
+            }
+            .hero-img{
+                text-align: center;
+            }
+            .hero-img img{
+                width: 560px;
+                height: auto;
+            }
+            .hero{
+                height: 100%;
+                gap: 1rem;
+                grid-template-columns: 1fr;
+            }
+            .scroll-down{
+                display: none;
+            }
+        }
+
+        @media (max-width: 990px){
+            #menu-icon{
+                display: block;
+            }
+            .navlist{
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                width: 300px;
+                height: 40vh;
+                background: rgba(216, 110, 24, 0.5); /* Couleur #d86e18 avec 50% de transparence */
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding: 50px 20px;
+                transition: all .55s ease;
+            }
+            .navlist a{
+                display: block;
+                margin-left: 0;
+                margin: 7px 0;
+            }
+            .navlist.open{
+                right: 0;
+            }
+        }
+
+        @media (max-width: 680px){
+            .hero-img img{
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #9c5503;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .modal-content h1 {
+            font-family: 'Permanent Marker', cursive;
+            
+            font-size: 24px;
+            color: #ffffff; /* Couleur du texte, vous pouvez changer selon votre préférence */
+            margin-bottom: 20px; /* Espace entre le titre et la vidéo */
+        }
+
+        .close {
+            color: #ffffff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+		form {
+			margin-bottom: 20px; /* Ajoute une marge en bas du tableau */
+			margin: 0 auto; /* Centre le formulaire horizontalement */
+			border-collapse: collapse;
+			border: none; /* Supprime la bordure */
+			border-radius: 10px; /* Ajouter des coins arrondis */
+			letter-spacing: 1px;
+			font-family: sans-serif;
+			width: 90%; /* Largeur du formulaire, ajustez selon vos besoins */
+			max-width: 1550px; /* Largeur maximale du formulaire pour éviter qu'il ne devienne trop large */
+			background-color: transparent; /* Changer la couleur de fond du formulaire */
+			
+		}
+		
+		fieldset {
+			border: none; /* Supprime la bordure */
+			color: #ffffff;
+		}
+
+		div {
+			margin-bottom: 8px; /* Ajoute un espace de 20px en bas de chaque div */
+		}
+		
+
+		#bouton {
+			border-radius: 5px; /* Ajouter des coins arrondis */
+            background-color: transparent;
+            color: #ffffff;
+			border: 1px solid #d2d3d3;
+            padding: 1.5px 10px;
+            cursor: pointer; 
+            text-decoration: none;
+            text-align: center;
+			font-weight: bold; /* Rendre le texte en gras */
+        }
+
+        #bouton:hover {
+            background-color: #502701;
+			border: 1px solid #ffffff;
+			color: #ffffff;
+        }
+		
+		
+        label {
+            font-weight: normal;
+        }
+		
+		.required {
+        color: #90aeef;
+		}
+
+		#courrielPrincipal,
+		#courrielSecours,
+		#lockedReason,
+		#sAMAccountName,
+		#Utilisateur,
+		#dateModification,
+		#dateErreur,
+		#dateDerniereConnexion,
+		#dateCreation,
+		#Matricule,
+		#Identifiant,
+		#Département,
+		#Délégation,
+		#IdFicheAgent,
+		#Mailperso,
+		#Mailpro,
+		#MauvaiseAdMail,
+		#BonneAdMail,
+		#collectivite,
+		#Nom,
+		#AdMailGestionnaire,
+		#telephone{
+			 margin-left: 1%;
+			 padding:1px;
+			 position:absolute;
+			 font-size: medium;
+			 width:300px;
+			 
+		}
+
+		#CompteRetrouve,
+		#etatCompteAgent,
+		#AccountLocked,
+		#compteECommunautes{
+			 margin-left: 1%;
+			 padding:1px;
+			 /* border-radius: 5px; */
+			 position:absolute;
+			 /* transition: .5s ease;  */
+			 /* top: 17.8%; */
+			 /* left: 26%; */
+			 font-size: medium;
+			 width:100px;
+		}
+		
+		::selection {
+			background-color: #f7f7f7; /* Changer la couleur de surlignage */
+			color: #2a2a2d; /* Changer la couleur du texte surligné */
+		}
+		
+		
+		/************************************************************************/
+		
+		/* Styles pour les champs de saisie */
+		
+		input[type="text"] {
+			margin-left: 1%;
+			padding: 1px;
+			font-size: medium;
+			width: 300px;
+			border: 1px solid #d2d3d3;
+			color: #ffffff;
+			/*font-weight: bold; /* Rendre le texte en gras */
+			border-radius: 5px; /* Ajouter des coins arrondis */
+			
+		}
+		
+		input {
+			background-color: #502701;
+			border: 1px solid #ffffff;
+		}
+
+		/* Styles pour les champs de saisie au passage de la souris */
+		
+		input[type="text"]:hover {
+			background-color: #502701;
+			border: 1px solid #ffffff;
+			color: #ffffff;
+			font-weight: bold; /* Rendre le texte en gras */
+		}
+		
+		
+		 /* Lorsque le champ de saisie est en focus, changez sa largeur à 100% */
+		 input[type=text]:focus {
+			 width: 2%;
+			 border: 1px solid #90aeef;
+		 }
+		 
+		 input[type=text] {
+			  width: 2.7%;
+			  -webkit-transition: width 0.15s ease-in-out;
+			  transition: width 0.15s ease-in-out;
+		 }
+		 
+		 select {
+			border: 1px solid #ffffff;
+			background-color: #502701;
+			color: #ffffff;
+			/*font-weight: bold; /* Rendre le texte en gras */
+			border-radius: 5px; /* Ajouter des coins arrondis */
+		}
+		
+		 select:hover {
+			border: 1px solid #ffffff;
+			color: #ffffff;
+			font-weight: bold; /* Rendre le texte en gras */
+			
+		}
+		
+		select option:hover {
+			background-color: #90aeef; /* Couleur de fond au survol */
+			color: #3b3b3f; /* Couleur du texte au survol */
+		}
+		 
+				
+		/************************************************************************/
+
+
+		/*************************** Groupe d'affectation ***********************/
+
+		table {
+			
+			margin-bottom: 20px; /* Ajoute une marge en bas du tableau */
+			border-collapse: collapse;
+			border: transparent;
+			border-radius: 5px; /* Ajouter des coins arrondis */
+			letter-spacing: 1px;
+			font-family: sans-serif;
+			font-size: .8rem;
+			width: 90%; /* Largeur du tableau, ajustez selon vos besoins */
+			max-width: 1550px; /* Largeur maximale du tableau pour éviter qu'il ne devienne trop large */
+			color: #ffffff;
+		}
+		
+		.table-container {
+			border-radius: 10px; /* Ajouter des coins arrondis de 10 pixels */
+			overflow: hidden; /* Masquer le contenu dépassant des coins arrondis */
+		}
+
+		td,
+		th {
+			border: transparent;
+			border-radius: 15px; /* Ajouter des coins arrondis */
+			padding: 5px 10px;
+		}
+
+		td {
+			text-align: center;
+		}
+		
+        thead,
+        tfoot {
+            background-color: transparent;
+            color: #fff;
+        }
+
+        tbody {
+			background-color: transparent;
+		}
+
+
+		caption {
+			padding: 10px;
+			caption-side: bottom;
+		}
+
+		#additionbar{
+			 margin-left: 1%;
+			 padding:3px;
+			 position:absolute;
+			 font-size: medium;
+			 width:200px;
+		}
+
+        .ghost {
+            position: absolute;
+            width: 200px; /* Ajustez la taille selon vos besoins */
+            opacity: 0.5; /* Opacité par défaut à 50 % */
+            transition: left 1s ease, top 1s ease, opacity 0.5s ease; /* Transition de la position et de l'opacité */
+        }
+
+    </style>
+
+    <!-- scrollreveal effect -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let menu = document.querySelector('#menu-icon');
+            let navlist = document.querySelector('.navlist');
+            
+            
+            menu.onclick = () => {
+                menu.classList.toggle('bx-x');
+                navlist.classList.toggle('open');
+            };
+
+            /* gérer le clic sur "Outils" et afficher/masquer le sous-menu. */
+
+            document.getElementById("tools-menu").addEventListener("click", function(event) {
+                event.preventDefault();
+                var submenu = document.getElementById("tools-submenu");
+                submenu.classList.toggle("show");
+            });
+
+            /* Fermer le sous-menu "outils" si on clique ailleurs sur la page */
+            window.onclick = function(event) {
+                if (!event.target.matches('#tools-menu')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+
+            
+            const sr = ScrollReveal({
+                distance: '65px',
+                duration: 2600,
+                delay: 450,
+                reset: true
+            });
+
+            sr.reveal('.hero-text', { delay: 200, origin: 'top' });
+            sr.reveal('.hero-img', { delay: 450, origin: 'top' });
+            sr.reveal('.scroll-down', { delay: 500, origin: 'right' });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let logo = document.querySelector('#logo');
+            let dropdownMenu = document.querySelector('#dropdown-menu');
+
+            logo.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Toggle the dropdown menu
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Optionnel : Fermer le menu si l'utilisateur clique en dehors
+            window.addEventListener('click', function(event) {
+                if (!logo.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+        });
+
+		
+		/************************ Générateur **************************/
+
+		var input;
+        var NewPass;
+        var Category;
+        var newLength;
+       
+		var Couleurs = ["Orange", "Rose", "Violet", "Magenta", "Fushia", "Mauve", "Cyan", "Rouge", "Jaune", "Azur", "Blanc", "Bleu" ];
+		var Meteo = ["Nuages", "Soleil", "Eclair", "Lune", "Orage", "Neige", "Ciel"];
+		var Nature = ["Feuille", "Arbre", "Fleurs", "Foret", "Plume", "Ocean", "Sable", "Tulipe", "Marguerite", "Muget", "Violette", "Tournesol", "Sapin", "Roseau", "Bambou", "Lilas", "Palmier", "Rosier", "Cerisier", "Fraisier", "Olivier", "Plage", "Montagne" ];
+		var Formation = ["Formation" ];  
+		var Sports = ["Billard", "Poker", "Petanque", "Foot", "Basket", "Tennis", "Golf", "Danse" ];
+
+
+		function search_mdp(myMin, myMax) {
+			var currentYear = new Date().getFullYear();
+			var randomDigits = () => Math.floor(Math.random() * 90) + 10; // generates a random number between 10 and 99
+
+			function getMdp(word) {
+				if (word.length < 6) {
+					return word + currentYear;
+				} else {
+					return word + randomDigits();
+				}
+			}
+
+			COULEURS = Couleurs[Math.floor(Math.random() * Couleurs.length)];
+			document.getElementById('COULEURS').innerHTML = getMdp(COULEURS);
+
+			METEO = Meteo[Math.floor(Math.random() * Meteo.length)];
+			document.getElementById('METEO').innerHTML = getMdp(METEO);
+
+			NATURE = Nature[Math.floor(Math.random() * Nature.length)];
+			document.getElementById('NATURE').innerHTML = getMdp(NATURE);
+
+			FORMATION = Formation[Math.floor(Math.random() * Formation.length)];
+			document.getElementById('FORMATION').innerHTML = FORMATION;
+			Chiffre_Formation = Math.floor(Math.random() * (myMax - myMin) + myMin);
+			document.getElementById('Chiffre_Formation').innerHTML = Chiffre_Formation;
+
+			SPORTS = Sports[Math.floor(Math.random() * Sports.length)];
+			document.getElementById('SPORTS').innerHTML = getMdp(SPORTS);
+		}
+
+
+		function save_password (){
+			let NewPass = document.getElementById('additionbar').value
+			let Category = document.getElementById('choix_categorie').value
+			
+			if (Category == 03){
+				let newLengthCouleurs = Couleurs.push(NewPass);
+				alert("Votre mot de passe a été ajouté.") ;
+			}
+			else if (Category == 05){
+				let newLengthMeteo = Meteo.push(NewPass);
+				alert("Votre mot de passe a été ajouté.") ;
+			}
+			else if (Category == 06){
+				let newLengthNature = Nature.push(NewPass);
+				alert("Votre mot de passe a été ajouté.") ;
+			}
+			else if (Category == 07){
+				let newLengthObjets = Formation.push(NewPass);
+				alert("Votre mot de passe a été ajouté.") ;
+			}
+			else if (Category == 09){
+				let newLengthSports = Sports.push(NewPass);
+				alert("Votre mot de passe a été ajouté.") ;
+			}
+			else if (Category == 00){
+				alert("Vous devez sélectionner une catégorie avant d'ajouté un nouveau mot de passe.") ;
+			}
+		}
+
+		//Permet d'afficher le resultat lorsqu'on appuy sur la touche "Entrée" du clavier
+		document.addEventListener("keyup", function(event) {
+			if (event.keyCode === 13) {
+				search_delegation();
+				let Departement = document.getElementById('searchbarDepartement').value = "" ;
+				let Structure = document.getElementById('searchbarStructure').value = "" ;
+			}
+		});
+
+    </script>
+
+    <script>
+        function randomPosition(ghost) {
+            const windowWidth = window.innerWidth - 200; // Largeur de la fenêtre - largeur de l'image
+            const windowHeight = window.innerHeight - 200; // Hauteur de la fenêtre - hauteur de l'image
+            const randomX = Math.random() * windowWidth;
+            const randomY = Math.random() * windowHeight;
+
+            ghost.style.left = randomX + 'px';
+            ghost.style.top = randomY + 'px';
+        }
+
+        function moveGhost(ghost) {
+            ghost.style.opacity = '0.01'; // Réduit l'opacité à 25 % pendant le mouvement
+            randomPosition(ghost); // Positionner aléatoirement le GIF
+            setTimeout(() => {
+                ghost.style.opacity = '0.5'; // Rétablit l'opacité à 50 % après un délai
+            }, 500); // Délai de 500 ms pour correspondre à la durée du mouvement
+        }
+
+        function animateGhosts() {
+            const ghosts = document.querySelectorAll('.ghost');
+            ghosts.forEach(ghost => {
+                moveGhost(ghost);
+            });
+        }
+
+        setInterval(animateGhosts, 2000); // Changez le délai ici pour modifier la fréquence
+    </script>
+
+</head>
+<body>
+	
+		<header>
+			<a href="#" class="logo" id="logo">PROJET</a>
+            <a href="Generateur.html" class="logo" id="Halloween">🕸</a>
+			<div class="dropdown-menu" id="dropdown-menu">
+				<ul>
+					<li><a href="Halloween.html">CNFPT</a></li>
+					<li><a href="#">Projet 2</a></li>
+					<li><a href="#">Projet 3</a></li>
+					<li><a href="#">Projet 4</a></li>
+					<!-- Ajoutez plus de projets ici -->
+				</ul>
+			</div>
+
+			<ul class="navlist">
+				<li><a href="Halloween.html">Accueil</a></li>
+				<li><a href="Consignes - Halloween.html">Procédures</a></li>
+				<li><a href="Template - Halloween.html">Template</a></li>
+				<li><a href="Groupes - Halloween.html">Groupes</a></li>
+				<li><a href="Generateur - Halloween.html">Générateur</a></li>
+				<li class="dropdown">
+                    <a href="#" id="tools-menu">Outils</a>
+                    <ul class="dropdown-content" id="tools-submenu">
+                        <li><a href="https://envrec.sharepoint.com/sites/AltimanceaCDS-P06_CNFPT/Documents%20partages/Forms/AllItems.aspx?id=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2F03%5FCU%2FFormation%20CNFPT%2Fvang%40Inf%5FPrd%5FSL200149%5FRebond%5FRDP%5FC%5FSCC%5FCDS%5Fotp%2Erdp&viewid=7e309004%2D4cdd%2D434d%2D9cc0%2D518c4edf41ad&parent=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2F03%5FCU%2FFormation%20CNFPT" target="_blank"><i class="ri-computer-line"></i>&nbsp RDP Machine de rebond</a></li>
+                        <li><a href="https://moncompte.cnfpt.fr/" target="_blank">Mon Compte CNFPT</a></li>
+                        <li><a href="https://formadist.cnfpt.fr/gestion" target="_blank">FORMADIST</a></li>
+                        <li><a href="https://auth.cnfpt.fr/carbon/admin/index.jsp" target="_blank">WSO2</a></li>
+                        <li><a href="https://e-communautes.cnfpt.fr/admin/people" target="_blank">E-Communautés</a></li>
+                        <li><a href="https://www.cnfpt.fr/rechercher-formation" target="_blank">Rechercher une formation</a></li>
+                        <li><a href="https://cnfptprod.service-now.com/login.do" target="_blank">Service-Now</a></li>
+                        <li><a href="https://envrec.sharepoint.com/sites/AltimanceaCDS-P06_CNFPT/Documents%20partages/Forms/AllItems.aspx?csf=1&web=1&e=Q8ktv4&CID=06ac5205%2Dd04a%2D4f2b%2Dab33%2D7ec6ae50849f&FolderCTID=0x0120004482D408D6E9AA469EE16A5EE3DBFA3A&id=%2Fsites%2FAltimanceaCDS%2DP06%5FCNFPT%2FDocuments%20partages%2FCNFPT%2F03%5FCU%2FFiches%20signal%C3%A9tiques%20ServiceNow" target="_blank">Fiches signalétiques</a></li>
+                    </ul>
+                </li>
+			</ul>
+
+			<div class="bx bx-menu" id="menu-icon"></div>
+		</header>
+	
+    
+    <section class="hero" id="cnfpt">
+        <img class="ghost" src="Boo.gif" alt="Fantôme 1">
+        <img class="ghost" src="Boo2.gif" alt="Fantôme 2">
+        <div class="hero-text">
+			<center>
+				<table>
+					<thead>
+				<tr>
+					<td><p><font size="5" face ="calibri"><b>Générateur de mots de passe</b></font></p></td>
+				</tr>
+			</thead>
+			
+					<tr>
+						<td>
+							<p><font size="4" face ="calibri"><button class="favorite styled"type="button" id="bouton" onclick="search_mdp(10, 99)"> Cliquez ici </font></button></p>
+							<p><font size="4" face ="calibri"> Couleurs : &nbsp <b><span id="COULEURS"></span><span id="Chiffre_Couleurs"></span></b></font></p>
+							<p><font size="4" face ="calibri"> Météo : &nbsp <b><span id="METEO"></span><span id="Chiffre_Meteo"></span></b></font></p>
+							<p><font size="4" face ="calibri"> Nature : &nbsp <b><span id="NATURE"></span><span id="Chiffre_Nature"></span></b></font></p>
+							<p><font size="4" face ="calibri"> Formation : &nbsp <b><span id="FORMATION"></span><span id="Chiffre_Formation"></span></b></font></p>
+							<p><font size="4" face ="calibri"> Sports : &nbsp <b><span id="SPORTS"></span><span id="Chiffre_Sports"></span></b></font></p>
+							
+							<br><br>			
+							
+							<p><font size="4" face ="calibri"><b>Nouveau mot de passe :</b></p>
+		
+							<div class="centre">
+							<div class="titre_centre">
+							<select id="choix_categorie" class="liste">
+							<option value="00">Sélectionnez une catégorie</option>
+							<option value="03">Couleurs</option>
+							<option value="05">Météo</option>
+							<option value="06">Nature</option>
+							<option value="07">Formation</option>
+							<option value="09">Sports</option>
+							</select>
+							</div>
+							</div>
+							
+							<p><input id="additionbar"  type="text" name="addition" placeholder="">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <button class="favorite styled"type="button" id="bouton"  onclick="save_password()">Ajouter</font></button></p>
+		
+						</td>		
+						
+					</tr>
+		
+			
+				</table>
+			</center>
+		</div>
+			
+
+    </section>
+
+    
+   
+
+    <div class="scroll-down">
+        <a href="#"><i class="ri-arrow-down-s-fill"></i></a>
+    </div>
+
+    
+    
+</body>
+</html>

@@ -1,0 +1,165 @@
+2024-11-08 11:43:56,430 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-08 11:43:56,431 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-08 11:43:56,432 - INFO -  * Restarting with stat
+2024-11-08 11:43:56,750 - WARNING -  * Debugger is active!
+2024-11-08 11:43:56,751 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:44:04,564 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:04] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:44:04,706 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:04] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:44:04,707 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:04] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:44:04,713 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:04] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:44:04,730 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:04] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:44:04,764 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:04] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:44:13,367 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:13] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:44:20,793 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:44:20,793 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:44:20,801 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:44:20,829 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:44:20,829 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:44:20,843 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:44:20,881 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:44:20,901 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:20] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:44:53,908 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 11:44:53,946 - INFO -  * Restarting with stat
+2024-11-08 11:44:54,358 - WARNING -  * Debugger is active!
+2024-11-08 11:44:54,360 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:44:59,539 - INFO - 127.0.0.1 - - [08/Nov/2024 11:44:59] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:45:07,952 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:45:07,953 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:07] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:45:07,970 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:07] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:45:08,043 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:08] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:45:08,045 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:08] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:45:08,049 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:08] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:45:08,068 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:08] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:45:08,085 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:08] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:45:19,929 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:19] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:45:24,161 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:45:24,162 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:45:24,170 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:45:24,200 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:45:24,200 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:45:24,208 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:45:24,272 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:45:24,292 - INFO - 127.0.0.1 - - [08/Nov/2024 11:45:24] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:46:43,633 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 11:46:43,667 - INFO -  * Restarting with stat
+2024-11-08 11:46:44,002 - WARNING -  * Debugger is active!
+2024-11-08 11:46:44,004 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:47:01,057 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 11:47:01,101 - INFO -  * Restarting with stat
+2024-11-08 11:47:01,444 - WARNING -  * Debugger is active!
+2024-11-08 11:47:01,446 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:47:19,809 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:19] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:47:27,081 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:47:27,082 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:47:27,101 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:47:27,176 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:47:27,177 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:47:27,182 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:47:27,205 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:47:27,225 - INFO - 127.0.0.1 - - [08/Nov/2024 11:47:27] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:49:43,836 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:43] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:49:47,766 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:49:47,766 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:49:47,855 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:49:47,878 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:49:47,879 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:49:47,890 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:49:47,938 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:49:47,956 - INFO - 127.0.0.1 - - [08/Nov/2024 11:49:47] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:50:04,902 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 11:50:04,938 - INFO -  * Restarting with stat
+2024-11-08 11:50:05,285 - WARNING -  * Debugger is active!
+2024-11-08 11:50:05,287 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:50:09,585 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:09] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:50:09,700 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:09] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:50:09,700 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:09] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:50:09,703 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:09] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:50:09,709 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:09] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:50:09,729 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:09] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:50:25,563 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:25] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:50:31,999 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:50:31,999 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:31] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:50:32,007 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:32] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:50:32,031 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:32] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:50:32,032 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:32] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:50:32,048 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:32] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:50:32,101 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:32] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:50:32,118 - INFO - 127.0.0.1 - - [08/Nov/2024 11:50:32] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:51:17,485 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 11:51:17,519 - INFO -  * Restarting with stat
+2024-11-08 11:51:17,870 - WARNING -  * Debugger is active!
+2024-11-08 11:51:17,871 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:53:43,684 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:43] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:53:43,855 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:43] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:53:43,867 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:43] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:53:43,913 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:43] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:53:43,940 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:43] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:53:43,942 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:43] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:53:54,099 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:54] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:53:58,984 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:53:58,985 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:58] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:53:58,993 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:58] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:53:59,014 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:59] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:53:59,015 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:59] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:53:59,026 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:59] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:53:59,064 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:59] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:53:59,091 - INFO - 127.0.0.1 - - [08/Nov/2024 11:53:59] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:54:29,363 - ERROR - Username or inactivity time is missing.
+2024-11-08 11:54:29,364 - INFO - 127.0.0.1 - - [08/Nov/2024 11:54:29] "[31m[1mPOST /saveInactivityTime HTTP/1.1[0m" 400 -
+2024-11-08 11:54:29,372 - INFO - 127.0.0.1 - - [08/Nov/2024 11:54:29] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 11:55:39,792 - INFO - User   'admin' logged in. Inactivity time: 0 seconds.
+2024-11-08 11:55:39,793 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:39] "POST /login HTTP/1.1" 200 -
+2024-11-08 11:55:39,884 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:39] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:55:39,910 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:39] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:55:39,911 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:39] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:55:39,916 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:39] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:55:40,062 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:40] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:55:40,080 - INFO - 127.0.0.1 - - [08/Nov/2024 11:55:40] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:56:51,059 - INFO - 127.0.0.1 - - [08/Nov/2024 11:56:51] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:56:51,149 - INFO - 127.0.0.1 - - [08/Nov/2024 11:56:51] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:56:51,153 - INFO - 127.0.0.1 - - [08/Nov/2024 11:56:51] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 11:56:51,168 - INFO - 127.0.0.1 - - [08/Nov/2024 11:56:51] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:56:51,232 - INFO - 127.0.0.1 - - [08/Nov/2024 11:56:51] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:56:51,267 - INFO - 127.0.0.1 - - [08/Nov/2024 11:56:51] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:59:06,036 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 11:59:06,149 - INFO -  * Restarting with stat
+2024-11-08 11:59:07,765 - WARNING -  * Debugger is active!
+2024-11-08 11:59:07,771 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:59:09,867 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\create_db.py', reloading
+2024-11-08 11:59:09,982 - INFO -  * Restarting with stat
+2024-11-08 11:59:11,160 - WARNING -  * Debugger is active!
+2024-11-08 11:59:11,168 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:59:24,429 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-08 11:59:24,431 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-08 11:59:24,434 - INFO -  * Restarting with stat
+2024-11-08 11:59:25,457 - WARNING -  * Debugger is active!
+2024-11-08 11:59:25,462 - INFO -  * Debugger PIN: 101-822-461
+2024-11-08 11:59:28,085 - INFO - 127.0.0.1 - - [08/Nov/2024 11:59:28] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 11:59:28,280 - INFO - 127.0.0.1 - - [08/Nov/2024 11:59:28] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 11:59:28,303 - INFO - 127.0.0.1 - - [08/Nov/2024 11:59:28] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 11:59:28,358 - INFO - 127.0.0.1 - - [08/Nov/2024 11:59:28] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 11:59:28,369 - INFO - 127.0.0.1 - - [08/Nov/2024 11:59:28] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 11:59:28,392 - INFO - 127.0.0.1 - - [08/Nov/2024 11:59:28] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 12:00:25,177 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:25] "GET /index.html HTTP/1.1" 200 -
+2024-11-08 12:00:25,247 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:25] "[36mGET /static/images/main.png HTTP/1.1[0m" 304 -
+2024-11-08 12:00:25,248 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:25] "[36mGET /static/images/main_dark.png HTTP/1.1[0m" 304 -
+2024-11-08 12:00:25,260 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:25] "[33mGET /main_neon.png HTTP/1.1[0m" 404 -
+2024-11-08 12:00:25,308 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:25] "[33mGET /Fond.jpg HTTP/1.1[0m" 404 -
+2024-11-08 12:00:25,332 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:25] "[33mGET /Presentation.mp4 HTTP/1.1[0m" 404 -
+2024-11-08 12:00:31,179 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:31] "GET /login.html HTTP/1.1" 200 -
+2024-11-08 12:00:35,456 - INFO - 127.0.0.1 - - [08/Nov/2024 12:00:35] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2024-11-08 12:00:59,734 - INFO -  * Detected change in 'C:\\Users\\cds-uc37\\UES - ER EVE REC\\Mikaël ROUEIL - Stagiaire\\Projet Login\\server.py', reloading
+2024-11-08 12:00:59,770 - INFO -  * Restarting with stat
+2024-11-08 14:04:47,951 - INFO -  * Restarting with stat
+2024-11-08 14:04:59,473 - INFO -  * Restarting with stat
+2024-11-08 14:05:52,991 - INFO -  * Restarting with stat
+2024-11-08 14:08:22,762 - INFO -  * Restarting with stat
+2024-11-08 14:21:08,632 - INFO -  * Restarting with stat
+2024-11-08 14:21:15,049 - INFO -  * Restarting with stat
+2024-11-08 14:22:54,700 - INFO -  * Restarting with stat
+2024-11-08 14:22:59,098 - INFO -  * Restarting with stat
+2024-11-08 14:25:15,816 - INFO -  * Restarting with stat
+2024-11-08 14:25:33,243 - INFO -  * Restarting with stat
+2024-11-08 14:32:04,540 - INFO -  * Restarting with stat
