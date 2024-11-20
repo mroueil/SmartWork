@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panneau d'Administration - CNFPT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(245.59deg, #189CD8 0%, #036c9c 28.53%, #013750 75.52%);
+            padding: 20px;
+        }
+
+        .header-titles {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-title {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .team-subtitle {
+            font-family: 'Permanent Marker', cursive;
+            color: white;
+            font-size: 40px;
+            letter-spacing: 2px;
+        }
+
+        .admin-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .input-field {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(50% - 15px); /* Ajustement pour le bouton */
+        }
+
+        #add-user-button {
+            background-color: #189CD8; /* Couleur du thème */
+            color: white;
+            border: none;
+            border-radius: 500px;
+            margin-top: 20px;
+            padding: 10px 372px; /* Plus de padding pour un bouton plus long */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; /* Rendre le bouton aussi large que le conteneur */
+            max-width: 200px; /* Limiter la largeur maximale */
+        }
+
+        #add-user-button:hover {
+            background-color: #036c9c; /* Couleur plus foncée au survol */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .reset-button {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reset-button:hover {
+            background-color: #e84118;
+        }
+
+        .delete-button {
+            background-color: #dc3545; /* Rouge */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 100px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 30px;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333; /* Rouge foncé */
+        }
+
+        /* Styles pour la popup */
+        .popup {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup-overlay {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .popup input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup button {
+            background-color: #36b9cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .popup button:hover {
+            background-color: #2c9fa0;
+        }
+
+        /* Styles pour le bouton de retour */
+        .back-btn {
+            display: inline-block;
+            color: white;
+            background: #036c9c;
+            border: 1px solid transparent;
+            padding: 8px 20px;
+            line-height: 1.4;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 30px;
+            text-transform: uppercase;
+            transition: all .55s ease;
+            cursor: pointer;
+            margin-right: 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-btn:hover {
+            background: transparent;
+            border: 1px solid white;
+            transform: translateX(8px);
+        }
+
+        h3 {
+            margin-bottom: 20px;
+    color: white; /* Change la couleur du texte en blanc */
+}
+
+h2 {
+            margin-bottom: 20px;
+    color: black; /* Change la couleur du texte en blanc */
+}
+
+.disabled-button {
+    background-color: #ccc; /* Couleur grisâtre */
+    color: #666; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    cursor: not-allowed; /* Curseur en forme de croix */
+    pointer-events: none; /* Désactiver les événements de clic */
+    opacity: 0.6; /* Rendre le bouton légèrement transparent */
+}
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">Retour</button>
+    <div class="header-titles">
+        <h1 class="team-title">Panneau d'Administration</h1>
+        <h2 class="team-subtitle">Gestion des Utilisateurs</h2>
+    </div>
+    <div class="admin-container" id="admin-container">
+        <h3>Ajouter un Utilisateur</h3>
+        <input type="text" id="new-username" class="input-field" placeholder="Nom d'utilisateur" />
+        <input type="password" id="new-user-password" class="input-field" placeholder="Mot de passe" />
+        <button id="add-user-button">Ajouter</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="user-table-body">
+                <!-- Les lignes d'utilisateurs seront ajoutées ici -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Réinitialiser le mot de passe</h3>
+        <input type="password" id="new-password" placeholder="Nouveau mot de passe" />
+        <input type="password" id="confirm-password" placeholder="Confirmer le mot de passe" />
+        <button id="submit-button">Réinitialiser</button>
+        <button onclick="closePopup()">Annuler</button>
+    </div>
+
+    <script>
+        // Vérification de l'accès à la page admin
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        const isAdmin = sessionStorage.getItem('isAdmin');
+
+        if (!isLoggedIn) {
+            window.location.href = 'login.html'; // Redirection vers login.html si non connecté
+        } else if (isAdmin !== 'true') {
+            window.location.href = 'index.html'; // Redirection vers index.html si non admin
+        }
+
+        // Fonction pour récupérer les utilisateurs depuis la base de données
+        async function fetchUsers() {
+            const response = await fetch('/api/users'); // Remplacez par l'URL de votre API
+            const users = await response.json();
+            return users;
+        }
+
+        // Fonction pour ajouter un nouvel utilisateur
+        async function addUser  () {
+            const username = document.getElementById('new-username').value;
+            const password = document.getElementById('new-user-password').value;
+
+            if (username && password) {
+                const response = await fetch('/add_user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: username, password: password }),
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert(data.message);
+                    document.getElementById('new-username').value = '';
+                    document.getElementById('new-user-password').value = '';
+                    fetchUsers().then(users => displayUsers(users)); // Met à jour la liste des utilisateurs
+                } else {
+                    alert('Erreur lors de l\'ajout de l\'utilisateur : ' + data.message);
+                }
+            } else {
+                alert("Les champs ne peuvent pas être vides.");
+            }
+        }
+
+        // Événement pour le bouton d'ajout d'utilisateur
+        document.getElementById('add-user-button').onclick = addUser ;
+
+        // Fonction pour afficher les utilisateurs
+function displayUsers(users) {
+    const userTableBody = document.getElementById('user-table-body');
+    userTableBody.innerHTML = ''; // Réinitialiser le contenu du tableau avant d'ajouter de nouveaux utilisateurs
+
+    users.forEach(user => {
+        const userRow = document.createElement('tr');
+
+        const usernameCell = document.createElement('td');
+        usernameCell.textContent = user.username;
+
+        const actionCell = document.createElement('td');
+
+        // Bouton pour réinitialiser le mot de passe
+        const resetButton = document.createElement('button');
+        resetButton.className = 'reset-button';
+        resetButton.textContent = 'Réinitialiser le mot de passe';
+        resetButton.onclick = () => openPopup(user.username);
+
+        // Bouton pour supprimer l'utilisateur
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = 'Supprimer';
+
+        // Vérifier si l'utilisateur est l'admin
+        if (user.username === 'admin') { // Remplacez 'admin' par le nom d'utilisateur de votre admin
+            // Si c'est l'admin, appliquer la classe désactivée
+            deleteButton.classList.add('disabled-button');
+            deleteButton.onclick = () => alert("Vous ne pouvez pas supprimer le compte administrateur.");
+        } else {
+            // Si ce n'est pas l'admin, lier le bouton à la fonction de suppression
+            deleteButton.onclick = () => deleteUser (user.username);
+        }
+
+        // Ajouter les boutons à la cellule d'action
+        actionCell.appendChild(resetButton);
+        actionCell.appendChild(deleteButton);
+        userRow.appendChild(usernameCell);
+        userRow.appendChild(actionCell);
+        userTableBody.appendChild(userRow);
+    });
+}
+
+        // Fonction pour supprimer un utilisateur
+        async function deleteUser (username) {
+            const confirmation = confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${username} ?`);
+            if (confirmation) {
+                const response = await fetch(`/delete_user/${username}`, {
+                    method: 'DELETE',
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert(data.message);
+                    fetchUsers().then(users => displayUsers(users)); // Met à jour la liste des utilisateurs
+                } else {
+                    alert('Erreur lors de la suppression de l\'utilisateur : ' + data.message);
+                }
+            }
+        }
+
+        // Fonction pour ouvrir la popup
+        function openPopup(username) {
+            document.getElementById('popup-overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('submit-button').onclick = () => resetPassword(username);
+        }
+
+        // Fonction pour fermer la popup
+        function closePopup() {
+            document.getElementById('popup-overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+        }
+
+        // Fonction pour réinitialiser le mot de passe
+        async function resetPassword(username) {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword && confirmPassword) {
+                if (newPassword === confirmPassword) {
+                    const response = await fetch('/reset_password', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username: username, new_password: newPassword }),
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        alert(data.message);
+                        closePopup();
+                    } else {
+                        alert('Erreur lors de la réinitialisation du mot de passe : ' + data.message);
+                    }
+                } else {
+                    alert("Les mots de passe ne correspondent pas.");
+                }
+            } else {
+                alert("Les champs ne peuvent pas être vides.");
+            }
+        }
+
+        // Appel de la fonction pour récupérer et afficher les utilisateurs
+        fetchUsers().then(users => displayUsers(users));
+    </script>
+</body>
+</html>

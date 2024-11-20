@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - CNFPT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(245.59deg, #189CD8 0%, #036c9c 28.53%, #013750 75.52%);
+            margin: 0;
+            position: relative;
+            padding-top: 50px;
+        }
+
+        .header-titles {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-title {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .team-subtitle {
+            font-family: 'Permanent Marker', cursive;
+            color: white;
+            font-size: 60px;
+            letter-spacing: 2px;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            width: 450px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-title {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px 45px; /* Ajoutez un padding à droite pour l'icône */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="submit"] {
+            background: #036c9c;
+            color: white;
+            border: 1px solid transparent;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.55s ease;
+        }
+
+        input[type="submit"]:hover {
+            background: transparent;
+            border: 1px solid white;
+            transform: translateX(8px);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: none;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .forgot-password {
+            margin-top: 20px;
+        }
+
+        .forgot-password a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+        }
+
+        #app canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <div class="header-titles">
+        <h1 class="team-title">Recyclea</h1>
+        <h2 class="team-subtitle">TEAM CNFPT</h2>
+    </div>
+
+    <div class="login-container">
+        <h3 class="login-title">Connexion</h3>
+        <form id="login-form" onsubmit="return validateForm()">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Mot de passe" required oninput="hidePassword()">
+                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                    <i class="fas fa-eye" id="toggle-icon"></i>
+                </button>
+            </div>
+            <div class="error-message" id="error-message">
+                Nom d'utilisateur ou mot de passe incorrect.
+            </div>
+            <input type="submit" value="Se connecter">
+        </form>
+    </div>
+
+    <script type="module">
+        import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js';
+
+        neonCursor({
+            el: document.getElementById('app'),
+            shaderPoints: 16,
+            curvePoints: 80,
+            curveLerp: 0.5,
+            radius1: 5,
+            radius2: 30,
+            velocityTreshold: 10,
+            sleepRadiusX: 100,
+            sleepRadiusY: 100,
+            sleepTimeCoefX: 0.0025,
+            sleepTimeCoefY: 0.0025
+        });
+    </script>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        function hidePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-icon');
+            if (passwordInput.value.length > 0) {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        function validateForm() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('error-message');
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            'username': username,
+            'password': password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            sessionStorage.setItem('currentUser ', username);
+            errorMessage.style.display = 'none';
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('isAdmin', username === 'admin' ? 'true' : 'false'); // Assurez-vous que le nom d'utilisateur admin est correct
+            window.location.href = 'index.html';
+        } else {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    return false; // Prevent form submission
+}
+    </script>
+</body>
+</html>
